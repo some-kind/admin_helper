@@ -5,3 +5,52 @@
 - name: "pgAgent на CentOS"
   include_tasks: "centos.yml"
   when: ansible_os_family == "RedHat"
+
+- name: "Создание директории для логов pgAgent"
+  ansible.builtin.file:
+    path: "{{ pgagent_log_path }}"
+    state: directory
+    force: no
+    owner: postgres
+    group: postgres
+    mode: 0660
+
+- name: "Проверка расширения pgAgent в БД"
+  postgresql_query:
+    query: "SELECT count(*) FROM pg_extension WHERE extname='pgagent'"
+  become: true
+  become_user: postgres
+  register: extension_check
+
+#- name: "Отладка переменной extension_check"
+#  ansible.builtin.debug:
+#    var: extension_check
+
+- name: "Создание расширения pgAgent в БД и выдача привелегий"
+  postgresql_query:
+    query: "{{ pg_agent_queries }}"
+  become: true
+  become_user: postgres
+  when: extension_check.query_result[0].count == 0
+
+- name: "Создание конфига pgAgent"
+  ansible.builtin.template:
+    src: pgagent_conf.j2
+    dest: /etc/pgagent.conf
+    owner: postgres
+    group: postgres
+    mode: 0660
+
+- name: "Создание демона pgAgent"
+  ansible.builtin.template:
+    src: pgagent_service.j2
+    dest: /etc/systemd/system/pgagent.service
+    owner: postgres
+    group: postgres
+    mode: 0660
+
+- name: "Запуск демона pgAgent"
+  ansible.builtin.service:
+    name: pgagent
+    enabled: yes
+    state: started
