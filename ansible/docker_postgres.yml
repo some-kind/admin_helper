@@ -30,19 +30,3 @@
   roles:
     - geerlingguy.docker
     - docker_postgresql
-
-- name: "Проверка работоспособности PostgreSQL"
-  hosts: docker_postgres
-  become: true
-  gather_facts: true
-
-  tasks:
-    - name: "Проверка версии"
-      postgresql_query:
-        query: SELECT version()
-        login_host: "{{ ansible_default_ipv4.address }}"
-        login_user: postgres
-        login_password: postgres
-        port: 5432
-      become: true
-      become_user: postgres
