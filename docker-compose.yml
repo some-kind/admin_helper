@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+
+  ansible:
+    container_name: admin_helper
+    build: ./images/ansible
+    image: ansible
+    volumes:
+      - ./ansible:/ansible

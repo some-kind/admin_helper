@@ -1,0 +1,40 @@
+#####################################################################
+###                                                               ###
+###            Разворачивание PostgreSQL на хосте                 ###
+###                                                               ###
+#####################################################################
+---
+- name: "Разворачивание PostgreSQL на хосте"
+  #strategy: free
+  #serial: "80%"
+  hosts: postgres_on_host
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  # переменные
+  vars:
+    postgresql_users:
+      - name: postgres
+        password: postgres
+
+    postgresql_hba_entries:
+      - { type: local, database: all, user: postgres, auth_method: peer }
+      - { type: local, database: all, user: all, auth_method: peer }
+      - { type: host, database: all, user: all, address: '0.0.0.0/0', auth_method: md5 }
+      - { type: host, database: all, user: all, address: '::1/128', auth_method: md5 }
+
+  roles:
+    - geerlingguy.postgresql
+
+- name: "Проверка работоспособности PostgreSQL"
+  hosts: postgres_on_host
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: "Проверка версии" # хелсчек, забираем версию с постгрес.
+      postgresql_query:
+        query: SELECT version()
+      become: true
+      become_user: postgres
