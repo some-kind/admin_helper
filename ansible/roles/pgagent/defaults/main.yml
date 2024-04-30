@@ -1,0 +1,7 @@
+pgagent_log_path: "/var/log/pgagent"
+pg_agent_queries:
+  - "CREATE EXTENSION pgagent"
+  - "GRANT USAGE ON SCHEMA pgagent TO postgres"
+  - "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA pgagent TO postgres"
+  - "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA pgagent TO postgres"
+db_ip: "127.0.0.1"

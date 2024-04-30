@@ -1,0 +1,7 @@
+- name: "pgAgent на Debian"
+  include_tasks: "debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: "pgAgent на CentOS"
+  include_tasks: "centos.yml"
+  when: ansible_os_family == "RedHat"
