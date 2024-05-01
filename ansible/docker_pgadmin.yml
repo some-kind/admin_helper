@@ -1,0 +1,36 @@
+##################################################################
+###                                                            ###
+###           Разворачивание pgAdmin4 в контейнере             ###
+###                                                            ###
+##################################################################
+---
+- name: "Разворачивание pgAdmin4 в контейнере"
+  #strategy: free
+  #serial: "80%"
+  hosts: docker_pgadmin
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  vars:
+    docker_edition: 'ce'
+    docker_packages:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "docker-{{ docker_edition }}-rootless-extras"
+    docker_packages_state: present
+    docker_install_compose_plugin: true
+    docker_install_compose: false
+    docker_compose_package: docker-compose-plugin
+    docker_compose_package_state: present
+    docker_add_repo: true
+    docker_users:
+      - "{{ ansible_user }}"
+
+    pgadmin_port: 5050
+    pgadmin_login: "admin@domain.ru"
+    pgadmin_password: "Adm1n_@"
+
+  roles:
+    - geerlingguy.docker
+    - docker_pgadmin
