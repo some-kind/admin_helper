@@ -21,7 +21,7 @@ defaults
     default-server init-addr last,libc,none
 
 listen stats
-    bind :81
+    bind *:8080
     stats enable
     stats uri /stats
     stats refresh 5s

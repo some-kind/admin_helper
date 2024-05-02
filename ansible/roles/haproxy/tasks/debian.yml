@@ -4,21 +4,31 @@
     update_cache: yes
     state: latest
 
+- name: "Проверка наличия бэкапа конфига"
+  ansible.builtin.stat:
+    path: "/etc/haproxy/haproxy.cfg.backup"
+  register: backup_file
+
 - name: "Бэкап конфига Haproxy"
   ansible.builtin.file:
     src: "/etc/haproxy/haproxy.cfg"
     dest: "/etc/haproxy/haproxy.cfg.backup"
     state: hard
+  when: not backup_file.stat.exists
 
 - name: "Формирование конфига Haproxy"
   ansible.builtin.template:
-    src: "haproxy.cfg.j2"
+    src: "haproxy.cfg.debian.j2"
     dest: "/etc/haproxy/haproxy.cfg"
     owner: "somekind"
     group: "somekind"
     mode: "o=rw,g=r,a=r"
+  register: haproxy_config_result
+#  vars:
+#    pidfile: "/var/run/haproxy.pid"
 
 - name: "Перезапуск службы Haproxy"
   ansible.builtin.service:
     name: haproxy
     state: restarted
+  when: haproxy_config_result.changed
