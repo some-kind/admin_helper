@@ -1,0 +1,19 @@
+##########################################################################
+###                                                                    ###
+###           Разворачивание Node Exporter для Prometheus              ###
+###                                                                    ###
+##########################################################################
+---
+- name: "Разворачивание Node Exporter для Prometheus"
+  #strategy: free
+  #serial: "80%"
+  hosts: node_exporters
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  vars:
+
+
+  roles:
+    - node_expoter

@@ -1,0 +1,7 @@
+- name: "Установка Node Exporter на Debian"
+  include_tasks: "debian.yml"
+  when: ansible_os_family == "Debian"
+
+#- name: "Установка Node Exporter на CentOS"
+#  include_tasks: "centos.yml"
+#  when: ansible_os_family == "RedHat"
