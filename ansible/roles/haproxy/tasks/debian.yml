@@ -1,0 +1,24 @@
+- name: "Установка Haproxy"
+  ansible.builtin.apt:
+    name: haproxy
+    update_cache: yes
+    state: latest
+
+- name: "Бэкап конфига Haproxy"
+  ansible.builtin.file:
+    src: "/etc/haproxy/haproxy.cfg"
+    dest: "/etc/haproxy/haproxy.cfg.backup"
+    state: hard
+
+- name: "Формирование конфига Haproxy"
+  ansible.builtin.template:
+    src: "haproxy.cfg.j2"
+    dest: "/etc/haproxy/haproxy.cfg"
+    owner: "somekind"
+    group: "somekind"
+    mode: "o=rw,g=r,a=r"
+
+- name: "Перезапуск службы Haproxy"
+  ansible.builtin.service:
+    name: haproxy
+    state: restarted

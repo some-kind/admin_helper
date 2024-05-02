@@ -1,0 +1,7 @@
+- name: "Установка на Debian"
+  include_tasks: "debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: "Установка на CentOS"
+  include_tasks: "debian.yml"
+  when: ansible_os_family == "RedHat"
