@@ -1,0 +1,15 @@
+- name: "Создание docker-compose файла"
+  ansible.builtin.template:
+    src: "docker-compose.centos.j2"
+    dest: "{{docker_data}}/docker-compose.yml"
+    owner: "somekind"
+    group: "somekind"
+    mode: "o=rw,g=r,a=r"
+
+- name: "Создание конфига Haproxy"
+  ansible.builtin.template:
+    src: "haproxy.cfg.centos.j2"
+    dest: "{{docker_data}}/haproxy.cfg"
+    owner: "somekind"
+    group: "somekind"
+    mode: "o=rw,g=r,a=r"
