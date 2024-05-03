@@ -2,6 +2,7 @@
   include_tasks: "debian.yml"
   when: ansible_os_family == "Debian"
 
+# TODO починить CentOS
 #- name: "Установка Node Exporter на CentOS"
 #  include_tasks: "centos.yml"
 #  when: ansible_os_family == "RedHat"
