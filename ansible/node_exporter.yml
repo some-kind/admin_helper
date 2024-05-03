@@ -16,4 +16,4 @@
 
 
   roles:
-    - node_expoter
+    - node_exporter

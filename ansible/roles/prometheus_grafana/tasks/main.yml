@@ -22,6 +22,11 @@
     src: "Node_exporter_FULL.json"
     dest: "{{ docker_data }}/dashboards/Node_exporter_FULL.json"
 
+- name: "Создание провайдера дашбордов"
+  ansible.builtin.copy:
+    src: "dashboard.yaml"
+    dest: "{{ docker_data }}/dashboard.yaml"
+
 - name: "Связывание Grafana и Prometheus"
   ansible.builtin.template:
     src: "datasource.yaml.j2"

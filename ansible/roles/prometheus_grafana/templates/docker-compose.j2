@@ -21,6 +21,7 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes:
       - ./dashboards:/var/lib/grafana/dashboards
+      - ./dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
       - ./datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
 
       - {{ grafana_data }}:/var/lib/grafana
