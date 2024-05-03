@@ -1,0 +1,17 @@
+- name: "Установка Zabbix Agent 2"
+  ansible.builtin.apt:
+    name: zabbix-agent2
+    update_cache: yes
+    state: latest
+
+- name: "Настройка конфига Zabbix Agent"
+  lineinfile:
+    path: "/etc/zabbix/zabbix_agent2.conf"
+    regexp: "Server=127.0.0.1"
+    line: "Server=0.0.0.0/0"
+
+- name: "Перезапуск службы Zabbix Agent 2"
+  ansible.builtin.service:
+    name: zabbix-agent2
+    enabled: yes
+    state: restarted
