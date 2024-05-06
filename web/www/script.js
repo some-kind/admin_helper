@@ -1,3 +1,7 @@
+// import { loadHostsFile, parseHostsFile } from './hosts.js';
+
+
+
 function openTab(tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
@@ -48,12 +52,12 @@ function parseHostsFile(fileContent) {
       // Ищем комментарий перед блоком, который начинается с "#"
       var commentIndex = i - 1;
       // отладка
-      // console.log("Comment index:", commentIndex, "Line:", lines[commentIndex]);
+      //console.log("Comment index:", commentIndex, "Line:", lines[commentIndex]);
 
       // Получаем комментарий перед блоком
       var comment = lines[commentIndex].trim().replace('#', '');
       // отладка
-      // console.log("Comment:", comment);
+      //console.log("Comment:", comment);
       currentGroup = line.substring(1, line.length - 1);
 
       // Создаем контейнер для группы хостов
@@ -71,10 +75,21 @@ function parseHostsFile(fileContent) {
       groupHeader.appendChild(commentDiv);
       groupContainer.appendChild(groupHeader);
 
+      // Создаём контейнер основного содержимого
+      var hostsManager = document.createElement("div");
+      hostsManager.className = "hostsManager"
+      groupContainer.appendChild(hostsManager);
+
       // Создаем контейнер для списка хостов
       var hostsList = document.createElement("div");
       hostsList.className = "hostsList";
-      groupContainer.appendChild(hostsList);
+      hostsManager.appendChild(hostsList);
+
+      // Создаем кнопку "Добавить хост"
+      var addHostBtn = document.createElement("button");
+      addHostBtn.className = "btn add-host-btn";
+      addHostBtn.innerText = "Добавить хост";
+      hostsManager.appendChild(addHostBtn);
 
       // Добавляем контейнер для группы хостов в общий контейнер
       hostsContainer.appendChild(groupContainer);
@@ -91,22 +106,6 @@ function parseHostsFile(fileContent) {
       createHost(hostName, hostIp, currentGroup, hostsContainer);
     }
   }
-}
-
-function createGroup(groupName, comment, container) {
-  var groupDiv = document.createElement("div");
-  groupDiv.className = "group";
-
-  var groupHeader = document.createElement("div");
-  groupHeader.className = "groupHeader";
-  groupHeader.innerHTML = "<h4>" + groupName + "</h4><div class='comment'>" + comment + "</div>";
-  groupDiv.appendChild(groupHeader);
-
-  var hostsList = document.createElement("div");
-  hostsList.className = "hostsList";
-  groupDiv.appendChild(hostsList);
-
-  container.appendChild(groupDiv);
 }
 
 function createHost(hostName, hostIp, group, container) {

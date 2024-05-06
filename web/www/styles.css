@@ -22,11 +22,11 @@ body {
 }
 
 .tablinks:hover {
-  background-color: #bbb;
+  background-color: #aaa;
 }
 
 .tablinks.active {
-  background-color: #ccc;
+  background-color: #878787;
 }
 
 .tabcontent {
@@ -67,7 +67,7 @@ body {
 .group {
   margin-bottom: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .groupHeader {
@@ -78,6 +78,15 @@ body {
   /* margin-bottom: 10px; */
   background-color: #f0f0f0;
   padding: 10px;
+  border-radius: 10px;
+}
+
+.group.open .groupHeader {
+  border-radius: 10px 10px 0px 0px;
+}
+
+.groupHeader:hover {
+  background-color: #d0d0d0;
 }
 
 .groupHeader h4 {
@@ -92,8 +101,9 @@ body {
 }
 
 .hostsList {
-  display: none;
+  display: block;
   animation: fadeInOut 0.5s ease-in-out;
+
   padding: 10px;
 }
 
@@ -102,13 +112,22 @@ body {
   100% { opacity: 1; }
 }
 
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
 .activeGroup {
   background-color: #f0f0f0;
 }
 
 .host {
-  margin-bottom: 10px;
-  padding: 10px; /* Добавляем внутренние отступы для хостов */
+  margin-bottom: 5px;
+  padding: 5px; /* Добавляем внутренние отступы для хостов */
 }
 
 .host span {
@@ -122,12 +141,29 @@ body {
   border: none;
 }
 
-.add-host-btn {
-  background-color: #4682b4;
-  color: #fff;
-  border: none;
+.delete-btn:hover {
+  background-color: #9b250f;
 }
 
-.group.open .hostsList {
-  display: block;
+.add-host-btn {
+  background-color: #428c7b;
+  color: #fff;
+  border: none;
+  border-radius: 0px 0px 10px 0px;
+}
+
+.add-host-btn:hover {
+  background-color: #1a725e;
+}
+
+.group.open .hostsManager {
+  display: flex;
+}
+
+.hostsManager {
+  display: none;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* animation: slideIn 0.5s ease-in-out forwards; */
+  /* animation: fadeInOut 0.5s ease-in-out; */
 }
