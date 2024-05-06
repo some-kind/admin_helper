@@ -8,3 +8,12 @@ services:
     image: ansible
     volumes:
       - ./ansible:/ansible
+
+  web:
+    image: nginx:latest
+    container_name: web
+    ports:
+      - 80:80
+    volumes:
+      - ./web/conf.d:/etc/nginx/conf.d
+      - ./web/www:/var/www/html

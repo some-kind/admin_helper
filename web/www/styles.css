@@ -1,0 +1,133 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs {
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.tablinks {
+  background-color: #ddd;
+  float: left;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  width: calc(100% / 3); /* Растягиваем кнопки на одну треть ширины контейнера */
+  box-sizing: border-box; /* Учитываем padding и border в ширине кнопок */
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.tablinks:hover {
+  background-color: #bbb;
+}
+
+.tablinks.active {
+  background-color: #ccc;
+}
+
+.tabcontent {
+  display: none;
+  padding: 20px;
+}
+
+.tabcontent h3 {
+  margin-top: 0;
+}
+
+
+.group h4 {
+  margin-top: 0;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 5px;
+  background-color: #ddd;
+  border: 1px solid #999;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.btn:hover {
+  background-color: #ccc;
+}
+
+.comment {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+/* Стили для групп хостов */
+.group {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.groupHeader {
+  cursor: pointer; /* Делаем заголовок блока интерактивным */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.groupHeader h4 {
+  margin: 0; /* Убираем внешние отступы у заголовка */
+}
+
+.comment {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 10px;
+  margin-left: 10px; /* Добавляем внутренний отступ слева у комментария */
+}
+
+.hostsList {
+  display: none;
+  animation: fadeInOut 0.5s ease-in-out;
+  padding: 10px;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.activeGroup {
+  background-color: #f0f0f0;
+}
+
+.host {
+  margin-bottom: 10px;
+  padding: 10px; /* Добавляем внутренние отступы для хостов */
+}
+
+.host span {
+  display: inline-block; /* Делаем span блочными элементами */
+  margin-right: 10px; /* Добавляем внутренний отступ между элементами */
+}
+
+.delete-btn {
+  background-color: #ff6347;
+  color: #fff;
+  border: none;
+}
+
+.add-host-btn {
+  background-color: #4682b4;
+  color: #fff;
+  border: none;
+}
+
+.group.open .hostsList {
+  display: block;
+}
