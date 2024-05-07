@@ -2,12 +2,16 @@ version: '3.8'
 
 services:
 
-  ansible:
+  admin_helper:
     container_name: admin_helper
-    build: ./images/ansible
-    image: ansible
-    volumes:
-      - ./ansible:/ansible
+    build: ./images/admin_helper
+    image: admin_helper:1.0
+    #volumes:
+    #  - ./ansible:/ansible
+    ports:
+      - 8000:8000
+    networks:
+      - backend
 
   web:
     image: nginx:latest
@@ -17,3 +21,11 @@ services:
     volumes:
       - ./web/conf.d:/etc/nginx/conf.d
       - ./web/www:/var/www/html
+    depends_on:
+      - admin_helper
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

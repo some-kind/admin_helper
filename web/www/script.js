@@ -73,7 +73,7 @@ function toggleGroup(event) {
 document.addEventListener("DOMContentLoaded", function() {
 
     // Запрос к серверу Django для получения данных о хостах
-    fetch("http://10.0.0.123:8000/admin_helper/parse_hosts/")
+    fetch("/api/admin_helper/parse_hosts/")
         .then(function(response) {
             return response.json();
         })

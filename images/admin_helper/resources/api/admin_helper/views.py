@@ -7,7 +7,7 @@ import os
 
 def parse_hosts(request):
     # Путь к файлу hosts.ini
-    file_path = 'D:/Admin_Helper/api/hosts.ini'
+    file_path = '/ansible/hosts.ini'
 
     # Считывание содержимого файла hosts.ini
     with open(file_path, 'r', encoding='utf-8') as file:
