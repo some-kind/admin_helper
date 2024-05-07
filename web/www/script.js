@@ -72,8 +72,15 @@ function toggleGroup(event) {
 // Добавляем обработчики событий
 document.addEventListener("DOMContentLoaded", function() {
 
+    // Генерация CSRF токена
+    var csrfToken = generateCsrfToken();
+    //console.log('Сгенерированный CSRF токен:', csrfToken);
+
+    // Установка CSRF токена в cookies
+    setCsrfCookie('csrftoken', csrfToken);
+
     // Запрос к серверу Django для получения данных о хостах
-    fetch("/api/admin_helper/parse_hosts/")
+    fetch("/api/parse_hosts/")
         .then(function(response) {
             return response.json();
         })
@@ -83,8 +90,93 @@ document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll(".groupHeader").forEach(function(header) {
                 header.addEventListener("click", toggleGroup);
             });
+
+            // Обработчик нажатия на кнопки "удалить" у каждого хоста
+            document.querySelectorAll(".delete-btn").forEach(function(button) {
+                button.addEventListener("click", function() {
+                    //console.log('Нажата кнопка Удалить');
+                    // Получаем имя хоста из соответствующего блока
+                    var hostName = this.parentElement.querySelector(".hostName").textContent;
+                    //console.log('Выбран хост для удаления:', hostName);
+                    // Отправляем запрос на удаление хоста
+                    deleteHost(hostName);
+                });
+            });
         })
         .catch(function(error) {
             console.error("Error fetching data:", error);
         });
+
+
+
 });
+
+// Функция для отправки запроса на удаление хоста
+function deleteHost(hostName) {
+    var url = '/api/delete_host/';
+
+    // Получение CSRF токена из cookies
+    var csrftoken = getCookie('csrftoken');
+
+    //console.log('Куки 2:', csrftoken);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // Установка CSRF токена в заголовок запроса
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            //console.log('Хост успешно удален:', xhr.responseText);
+            // Перезагрузка страницы для обновления данных
+            // location.reload();
+            // Удаление блока хоста из HTML
+            var hostElements = document.querySelectorAll('.host');
+            hostElements.forEach(function(hostElement) {
+                var hostSpan = hostElement.querySelector('.hostName');
+                if (hostSpan && hostSpan.textContent === hostName) {
+                    hostElement.remove();
+                }
+            });
+        } else {
+            console.error('Произошла ошибка:', xhr.responseText);
+        }
+    };
+    xhr.send('host_name=' + encodeURIComponent(hostName));
+    //console.log('Отправлен запрос на удаление хоста:', hostName);
+}
+
+// Функция для получения значения cookie по имени
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        //console.log('Куки 0:', cookies);
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Если имя cookie совпадает с искомым, извлекаем его значение
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    //console.log('Куки 1:', cookieValue);
+    return cookieValue;
+}
+
+// Функция генерации CSRF токена
+function generateCsrfToken() {
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var csrfToken = '';
+    for (var i = 0; i < 32; i++) {
+        csrfToken += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return csrfToken;
+}
+
+// Функция для установки CSRF токена в cookies
+function setCsrfCookie(name, value) {
+    document.cookie = name + '=' + value + ';path=/';
+}
+

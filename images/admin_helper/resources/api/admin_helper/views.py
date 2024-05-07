@@ -4,10 +4,12 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import os
 
+HOSTS = '/ansible/hosts.ini'
 
+# функция при запросе парсит файл hosts.ini и выдаёт ответ в виде json
 def parse_hosts(request):
     # Путь к файлу hosts.ini
-    file_path = '/ansible/hosts.ini'
+    file_path = HOSTS
 
     # Считывание содержимого файла hosts.ini
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -46,3 +48,30 @@ def parse_hosts(request):
         prev_line = line
 
     return JsonResponse({'hosts': hosts})
+
+
+# функция при запросе удаляет строку из файла hosts.ini
+def delete_host(request):
+    if request.method == 'POST':
+        host_name = request.POST.get('host_name')
+        if host_name:
+            file_path = HOSTS  # путь к файлу hosts.ini
+            try:
+                # Открываем файл на чтение и считываем его содержимое
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    lines = file.readlines()
+
+                # Удаляем строку с указанным хостом из списка строк
+                new_lines = [line for line in lines if host_name not in line]
+
+                # Перезаписываем файл с новым содержимым
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.writelines(new_lines)
+
+                return JsonResponse({'status': 'success', 'message': 'Хост успешно удален'})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Имя хоста не указано'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
