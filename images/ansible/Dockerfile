@@ -5,7 +5,7 @@ FROM debian:latest
 RUN apt-get update && apt-get install -y \
     software-properties-common \
     && apt-get install -y ansible sshpass python3 \
-    && pip3 install django
+    && pip3 install django django-cors-headers
 
 # Убеждаемся, что локали нет (для избежания проблем с кодировкой)
 ENV LANG C.UTF-8
