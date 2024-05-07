@@ -75,3 +75,43 @@ def delete_host(request):
             return JsonResponse({'status': 'error', 'message': 'Имя хоста не указано'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
+
+
+# функция добавления строки в файл hosts.ini при запросе
+def add_host(request):
+    if request.method == 'POST':
+        group = request.POST.get('group')
+        host_name = request.POST.get('host_name')
+        host_ip = request.POST.get('host_ip')
+        if host_name and host_ip:
+            file_path = HOSTS
+            try:
+                # Открываем файл на чтение и считываем его содержимое
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    lines = file.readlines()
+
+                # Находим индекс отправной строки (группа хостов)
+                start_index = lines.index(f"[{group}]")
+
+                # Ищем первую пустую строку после отправной строки (конец блока, куда и вставляем новую строку)
+                index_insert = None
+                for i in range(start_index + 1, len(lines)):
+                    if lines[i].strip() == '':
+                        index_insert = i
+                        break
+
+                # Вставляем строку с хостом
+                lines.insert(index_insert, f"{host_name} ansible_host={host_ip}")
+
+                # Перезаписываем файл с новым содержимым
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.writelines(lines)
+
+                return JsonResponse({'status': 'success', 'message': 'Хост успешно удален'})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Имя хоста или IP не указано'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
+

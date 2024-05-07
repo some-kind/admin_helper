@@ -125,5 +125,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://10.0.0.188",  # Замените это на адрес вашего клиентского приложения
+    "http://web",  # Замените это на адрес вашего клиентского приложения
 ]
