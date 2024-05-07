@@ -4,7 +4,8 @@ FROM debian:latest
 # Обновляем пакеты и устанавливаем необходимые зависимости
 RUN apt-get update && apt-get install -y \
     software-properties-common \
-    && apt-get install -y ansible sshpass
+    && apt-get install -y ansible sshpass python3 \
+    && pip3 install django
 
 # Убеждаемся, что локали нет (для избежания проблем с кодировкой)
 ENV LANG C.UTF-8
@@ -17,10 +18,8 @@ WORKDIR /ansible
 
 # Просто оставляем контейнер запущенным
 #CMD tail -f /dev/null
-# Запускаем Ansible при запуске контейнера
-#CMD ["ansible-playbook", "--version"]
+
 # подтягивание зависимостей
-CMD ["sh", "-c", "ansible-playbook --version \
- && ansible-galaxy install -r /ansible/requirements.yml \
+CMD ["sh", "-c", "ansible-galaxy install -r /ansible/requirements.yml \
  && ansible-galaxy collection install -r /ansible/requirements.yml \
  && tail -f /dev/null"]
