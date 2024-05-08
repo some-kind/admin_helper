@@ -39,8 +39,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Обработчик нажатия на кнопку "Добавить" в форме для обратного скрытия формы и отправки запроса
             document.querySelectorAll(".add-host-form-btn").forEach(function(button) {
-                button.addEventListener("click", toggleAddHost);
+                button.addEventListener("click", function(event) {
+                    // Находим родительский элемент группы
+                    var hostContainer = event.target.closest('.group');
+                    if (hostContainer) {
+                        // Ищем поля ввода и инфу о группе
+                        var hostName = hostContainer.querySelector('.host_name').value;
+                        var hostIp = hostContainer.querySelector('.host_ip').value;
+                        var group = hostContainer.getAttribute('data-group');
+
+                        // Проверка введённых данных
+                        if (validateHostInput(hostName, hostIp)) {
+                            // Формируем запрос
+                            addHost(group, hostName, hostIp);
+                            // Переключаем обратно кнопку
+                            toggleAddHost(event);
+                            // Очистить поля ввода после успешного добавления
+                            hostContainer.querySelector('.host_name').value = '';
+                            hostContainer.querySelector('.host_ip').value = '';
+                            // Создаём новый блок нового хоста
+                            createHostBlock(event, hostName, hostIp)
+                        }
+                    }
+                });
             });
+
         })
         .catch(function(error) {
             console.error("Error fetching data:", error);

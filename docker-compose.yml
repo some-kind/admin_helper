@@ -6,10 +6,10 @@ services:
     container_name: admin_helper
     build: ./images/admin_helper
     image: admin_helper:1.0
-    #volumes:
-    #  - ./ansible:/ansible
-    #ports:
-    #  - 8000:8000
+    volumes:
+      - ./images/admin_helper/resources/ansible:/ansible
+      - ./images/admin_helper/resources/api:/app
+      - ./logs:/app/logs
     networks:
       - backend
 

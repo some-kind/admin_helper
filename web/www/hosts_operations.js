@@ -33,51 +33,121 @@ function deleteHost(hostName) {
     //console.log('Отправлен запрос на удаление хоста:', hostName);
 }
 
-// Функция для добавления хоста
-function addHost() {
-    // Получаем значения полей ввода
-    var group = document.querySelector(".groupHeader h4").textContent.trim();
-    var hostNameInput = document.getElementById("hostNameInput");
-    var hostIPInput = document.getElementById("hostIPInput");
-    var host_name = hostNameInput.value.trim();
-    var host_ip = hostIPInput.value.trim();
+// Функция формирования запроса POST на добавление хоста
+function addHost(group, hostName, hostIp) {
+    var url = '/api/add_host/';
+    //var url = 'http://192.168.0.197:8000/add_host/';
 
-    // Проверяем, что поля не пустые
-    if (!host_name || !host_ip) {
-        alert("Имя хоста и IP-адрес должны быть заполнены.");
-        return;
-    }
+    // Получение CSRF токена из cookies
+    var csrftoken = getCookie('csrftoken');
 
-    // Проверяем правильность формата IP-адреса
-    if (!isValidIP(host_ip)) {
-        alert("Неправильный формат IP-адреса.");
-        return;
-    }
+    // console.log('Добавляем хост', hostName, ' ', hostIp, 'в группу:', group);
 
-    // Отправляем POST-запрос на сервер
+    // Формируем тело запроса
+    var formData = new FormData();
+    formData.append('group', group);
+    formData.append('host_name', hostName);
+    formData.append('host_ip', hostIp);
+
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/add_host/");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.open('POST', url);
+    xhr.setRequestHeader('X-CSRFToken', csrftoken); // Установка CSRF токена в заголовок запроса
+
     xhr.onload = function() {
         if (xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
-            if (response.status === "success") {
-                alert("Хост успешно добавлен.");
-                // Очищаем поля ввода после успешного добавления
-                hostNameInput.value = "";
-                hostIPInput.value = "";
+            if (response.status === 'success') {
+                console.log('Хост успешно добавлен:', response.message);
+
             } else {
-                alert("Ошибка: " + response.message);
+                console.error('Произошла ошибка:', response.message);
             }
         } else {
-            alert("Произошла ошибка: " + xhr.responseText);
+            console.error('Произошла ошибка:', xhr.statusText);
         }
     };
-    xhr.send("group=" + encodeURIComponent(group) + "&host_name=" + encodeURIComponent(host_name) + "&host_ip=" + encodeURIComponent(host_ip));
+
+    xhr.send(formData);
+
+
+    // Отправляем запрос к API
+//    fetch('/api/add_host/', {
+//        method: 'POST',
+//        body: formData
+//    })
+//    .then(function(response) {
+//        return response.json();
+//    })
+//    .then(function(data) {
+//        // Обрабатываем ответ от сервера
+//        if (data.status === 'success') {
+//            alert('Хост успешно добавлен');
+//            // Очищаем поля ввода
+//            document.querySelector('.host_name').value = '';
+//            document.querySelector('.host_ip').value = '';
+//        } else {
+//            alert('Произошла ошибка: ' + data.message);
+//        }
+//    })
+//    .catch(function(error) {
+//        console.error('Произошла ошибка:', error);
+//    });
 }
 
-// Проверка корректности формата IP-адреса
-function isValidIP(ip) {
-    var ipRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
-    return ipRegex.test(ip);
+// Функция для проверки введенных данных перед добавлением нового хоста
+function validateHostInput(hostNameInput, hostIpInput) {
+
+    // Проверка, что host_name не пустой
+    if (hostNameInput === '') {
+        alert('Введите имя хоста');
+        return false;
+    }
+
+    // Проверка на совпадение введенного host_name с уже существующими
+    var existingHostNames = document.querySelectorAll('.hostName');
+    for (var i = 0; i < existingHostNames.length; i++) {
+        if (existingHostNames[i].textContent === hostNameInput) {
+            alert('Хост с таким именем уже существует');
+            return false;
+        }
+    }
+
+    // Проверка на соответствие введенного IP адреса формату
+    var ipPattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+    if (!ipPattern.test(hostIpInput)) {
+        alert('Неверный формат IP адреса');
+        return false;
+    }
+
+    return true;
+}
+
+// Функция для создания нового блока хоста и добавления его в список хостов
+function createHostBlock(event, hostName, hostIp) {
+    // Создаем новый элемент div для хоста
+    var hostElement = document.createElement('div');
+    hostElement.classList.add('host');
+
+    // Создаем элементы span для имени хоста и его IP-адреса
+    var nameSpan = document.createElement('span');
+    nameSpan.classList.add('hostName');
+    nameSpan.textContent = hostName;
+
+    var ipSpan = document.createElement('span');
+    ipSpan.classList.add('hostIP');
+    ipSpan.textContent = hostIp;
+
+    // Создаем кнопку для удаления хоста
+    var deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn', 'delete-btn');
+    deleteBtn.textContent = 'Удалить';
+
+    // Добавляем элементы внутрь блока хоста
+    hostElement.appendChild(nameSpan);
+    hostElement.appendChild(ipSpan);
+    hostElement.appendChild(deleteBtn);
+
+    // Находим блок hostsList и добавляем в него созданный блок хоста
+    var hostsList = event.target.closest('.hostsManager').querySelector('.hostsList');
+    hostsList.appendChild(hostElement);
 }

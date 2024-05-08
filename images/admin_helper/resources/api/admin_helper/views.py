@@ -1,8 +1,11 @@
 from django.shortcuts import render
+import logging
 
 # Create your views here.
 from django.http import JsonResponse
 import os
+
+logger = logging.getLogger(__name__)
 
 HOSTS = '/ansible/hosts.ini'
 
@@ -91,8 +94,11 @@ def add_host(request):
                 with open(file_path, 'r', encoding='utf-8') as file:
                     lines = file.readlines()
 
+                # отладка
+                # logger.debug("Список строк:", lines)
+
                 # Находим индекс отправной строки (группа хостов)
-                start_index = lines.index(f"[{group}]")
+                start_index = lines.index(f"[{group}]\n")
 
                 # Ищем первую пустую строку после отправной строки (конец блока, куда и вставляем новую строку)
                 index_insert = None
@@ -102,17 +108,17 @@ def add_host(request):
                         break
 
                 # Вставляем строку с хостом
-                lines.insert(index_insert, f"{host_name} ansible_host={host_ip}")
+                lines.insert(index_insert, f"{host_name} ansible_host={host_ip}\n")
 
                 # Перезаписываем файл с новым содержимым
                 with open(file_path, 'w', encoding='utf-8') as file:
                     file.writelines(lines)
 
-                return JsonResponse({'status': 'success', 'message': 'Хост успешно удален'})
+                return JsonResponse({'status': 'success', 'message': 'Хост успешно добавлен'})
             except Exception as e:
                 return JsonResponse({'status': 'error', 'message': str(e)})
         else:
-            return JsonResponse({'status': 'error', 'message': 'Имя хоста или IP не указано'})
+            return JsonResponse({'status': 'error', 'message': 'Имя хоста, группы или IP не указано'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
 
