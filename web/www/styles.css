@@ -157,7 +157,6 @@ body {
   animation: fadeInOut 0.5s ease-in-out;
 
   display: block;
-  /*justify-self: end;*/
 }
 
 .add-host-btn:hover {
@@ -176,8 +175,7 @@ body {
   display: none;
   justify-content: space-between;
   flex-wrap: wrap;
-  /* animation: slideIn 0.5s ease-in-out forwards; */
-  /* animation: fadeInOut 0.5s ease-in-out; */
+  align-items: center;
 }
 
 .add-host-form {
@@ -190,9 +188,6 @@ body {
   margin: 15px 20px;
 
   animation: fadeInOut 0.5s ease-in-out;
-  /* background-color: #e0e0e0; */
-
-  /*justify-self: end;*/
 }
 
 .add-host-form.open {
@@ -217,5 +212,5 @@ body {
 }
 
 .close-form-btn {
-  /*justify-self: end;*/
+
 }
