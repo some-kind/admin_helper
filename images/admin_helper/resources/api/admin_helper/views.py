@@ -130,6 +130,39 @@ def get_settings(request):
     requirements_file = "requirements.yml"
 
     result = {}
+    # парсинг hosts.ini для получения переменных
+    hosts_file = HOSTS
+    # Считывание содержимого файла hosts.ini
+    with open(hosts_file, 'r', encoding='utf-8') as file:
+        hosts_content = file.read()
+
+
+
+    # Преобразование содержимого файла в список строк
+    hosts_lines = hosts_content.split('\n')
+
+    hosts_data = {}
+    hosts_data['comment'] = 'Основные настройки'
+
+    prev_line = ''  # предыдущая строка, нужна для комментариев
+    for line in hosts_lines:
+        line = line.strip()
+        if line.startswith('[') and 'all:vars' not in line:
+            break
+        if line.startswith('ansible'):
+            var_data = line.split('=')
+            var = var_data[0]
+            value = var_data[1]
+            hosts_data[var] = {}
+            hosts_data[var]['value'] = value
+            hosts_data[var]['comment'] = prev_line.strip("# ")
+
+        prev_line = line
+
+    # Добавляем словарь для основных настроек
+    result['basic_settings'] = hosts_data
+
+    # парсинг yml плейбуков
     for filename in os.listdir(ansible_directory):
         if filename.endswith(".yml") and filename != requirements_file:
             filepath = os.path.join(ansible_directory, filename)
@@ -139,7 +172,7 @@ def get_settings(request):
                 lines = file.readlines()
 
                 # Парсинг комментария файла
-                file_comment = lines[0].strip("# ")
+                file_comment = lines[0].strip("# \n")
                 filedata['comment'] = file_comment
 
                 # Паттерн для поиска переменных и их комментариев
@@ -184,7 +217,7 @@ def get_settings(request):
                                 filedata[var_name] = {'comment': current_comment, 'value': var_value}
                                 current_comment = None
                             else:
-                                filedata[var_name] = {'value': var_value}
+                                filedata[var_name] = {'comment': "", 'value': var_value}
                         elif match_comment:
                             current_comment = match_comment.group(1)
 
