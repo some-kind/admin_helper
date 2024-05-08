@@ -69,29 +69,6 @@ function addHost(group, hostName, hostIp) {
 
     xhr.send(formData);
 
-
-    // Отправляем запрос к API
-//    fetch('/api/add_host/', {
-//        method: 'POST',
-//        body: formData
-//    })
-//    .then(function(response) {
-//        return response.json();
-//    })
-//    .then(function(data) {
-//        // Обрабатываем ответ от сервера
-//        if (data.status === 'success') {
-//            alert('Хост успешно добавлен');
-//            // Очищаем поля ввода
-//            document.querySelector('.host_name').value = '';
-//            document.querySelector('.host_ip').value = '';
-//        } else {
-//            alert('Произошла ошибка: ' + data.message);
-//        }
-//    })
-//    .catch(function(error) {
-//        console.error('Произошла ошибка:', error);
-//    });
 }
 
 // Функция для проверки введенных данных перед добавлением нового хоста

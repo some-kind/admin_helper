@@ -11,7 +11,7 @@ RUN python3 -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 
 # Устанавливаем Django и необходимые зависимости через pip
-RUN pip3 install django django-cors-headers gunicorn
+RUN pip3 install django django-cors-headers gunicorn pyyaml
 
 # Копируем файлы приложения Django
 COPY resources/api /app

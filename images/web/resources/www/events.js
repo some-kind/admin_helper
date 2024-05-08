@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     setCsrfCookie('csrftoken', csrfToken);
 
     // Запрос к серверу Django для получения данных о хостах
-    fetch("/api/parse_hosts/")
+    fetch("/api/get_hosts/")
         .then(function(response) {
             return response.json();
         })

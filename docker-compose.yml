@@ -5,22 +5,24 @@ services:
   admin_helper:
     container_name: admin_helper
     build: ./images/admin_helper
-    image: admin_helper:1.0
+    image: admin_helper_api:1.0
     volumes:
       - ./images/admin_helper/resources/ansible:/ansible
       - ./images/admin_helper/resources/api:/app
-      - ./logs:/app/logs
     networks:
       - backend
+    ports:
+      - 8000:8000
 
-  web:
-    image: nginx:latest
+  admin_helper_web:
+    build: ./images/web
+    image: admin_helper_web:1.0
     container_name: web
     ports:
       - 80:80
     volumes:
-      - ./web/conf.d:/etc/nginx/conf.d
-      - ./web/www:/var/www/html
+      - ./images/web/resources/conf.d:/etc/nginx/conf.d
+      - ./images/web/resources/www:/var/www/html
     depends_on:
       - admin_helper
     networks:

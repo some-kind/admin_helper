@@ -1,8 +1,9 @@
-from django.shortcuts import render
-import logging
-
 # Create your views here.
 from django.http import JsonResponse
+from django.shortcuts import render
+
+import logging
+import re
 import os
 
 logger = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ HOSTS = '/ansible/hosts.ini'
 
 
 # функция при запросе парсит файл hosts.ini и выдаёт ответ в виде json
-def parse_hosts(request):
+def get_hosts(request):
     # Путь к файлу hosts.ini
     file_path = HOSTS
 
@@ -122,3 +123,71 @@ def add_host(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
 
+
+# функция при запросе парсит все .yml файлы (плейбуки) и возвращает json
+def get_settings(request):
+    ansible_directory = "/ansible"
+    requirements_file = "requirements.yml"
+
+    result = {}
+    for filename in os.listdir(ansible_directory):
+        if filename.endswith(".yml") and filename != requirements_file:
+            filepath = os.path.join(ansible_directory, filename)
+
+            filedata = {}
+            with open(filepath, 'r') as file:  #, encoding='utf-8'
+                lines = file.readlines()
+
+                # Парсинг комментария файла
+                file_comment = lines[0].strip("# ")
+                filedata['comment'] = file_comment
+
+                # Паттерн для поиска переменных и их комментариев
+                pattern_var = re.compile(r'^\s*(\w+):\s*(.*)$')
+                pattern_comment = re.compile(r'^\s*#\s*(.*)$')
+
+                # Флаг для определения, когда заканчивается блок vars
+                in_vars_block = False
+
+                # Переменная для хранения текущего комментария
+                current_comment = None
+
+                # Парсинг переменных и их комментариев
+                for i, line in enumerate(lines[1:]):
+                    line = line.strip()
+
+                    # отладка
+                    #logger.debug('Строки: ', lines)
+                    #logger.debug('Одна строка: ', line)
+
+                    if line.startswith('vars:'):
+                        in_vars_block = True
+                        continue
+                    if in_vars_block and line == '':
+                        break
+                    if in_vars_block:
+                        match_var = pattern_var.match(line)
+                        match_comment = pattern_comment.match(line)
+                        if match_var:
+                            var_name = match_var.group(1)
+                            var_value = match_var.group(2)
+
+                            if var_value == '':
+                                for next_line in lines[i+2:]:
+                                    if next_line.startswith('      '):
+                                        var_value += next_line.strip() + '\n'
+                                    else:
+                                        break
+                                var_value = var_value.strip()
+
+                            if current_comment:
+                                filedata[var_name] = {'comment': current_comment, 'value': var_value}
+                                current_comment = None
+                            else:
+                                filedata[var_name] = {'value': var_value}
+                        elif match_comment:
+                            current_comment = match_comment.group(1)
+
+            result[filename] = filedata
+
+    return JsonResponse(result)
