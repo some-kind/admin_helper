@@ -6,6 +6,7 @@ import os
 
 HOSTS = '/ansible/hosts.ini'
 
+
 # функция при запросе парсит файл hosts.ini и выдаёт ответ в виде json
 def parse_hosts(request):
     # Путь к файлу hosts.ini

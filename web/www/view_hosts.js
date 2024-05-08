@@ -32,9 +32,17 @@ function renderHostGroups(hostsData) {
 
         hostsManager.appendChild(hostsList);
 
+        // Добавление блока для формы ввода нового хоста
+        var addHostForm = document.createElement("div");
+        addHostForm.className = "add-host-form";
+        addHostForm.innerHTML = "<input class='host_name' type=text name='host_name' placeholder='Введите имя нового хоста'><input class='host_ip' type=text name='host_ip' placeholder='Введите IP нового хоста'><button class='btn add-host-form-btn'>Добавить</button>";
+        hostsManager.appendChild(addHostForm);
+
+        // Добавление кнопки "Добавить хост"
         var addHostBtn = document.createElement("button");
         addHostBtn.className = "btn add-host-btn";
         addHostBtn.innerHTML = "Добавить хост";
+        //addHostBtn.id = "addHostBtn";
         hostsManager.appendChild(addHostBtn);
 
         groupDiv.appendChild(hostsManager);
@@ -50,4 +58,35 @@ function toggleGroup(event) {
         var groupContainer = groupHeader.parentElement;
         groupContainer.classList.toggle("open");
     }
+}
+
+// Функция для обработки нажатия на кнопку Добавить хост (появление формы и скрытие кнопки)
+function toggleAddHost(event) {
+    var formDiv = event.target.previousElementSibling;
+    if (formDiv && formDiv.classList.contains("add-host-form")) {
+        formDiv.classList.toggle("open");
+    }
+    else {
+        formDiv = event.target.closest(".add-host-form");
+        formDiv.classList.toggle("open");
+    }
+
+    // Находим саму эту кнопку
+    var btnAddHost = event.target.closest(".add-host-btn");
+    if (btnAddHost) {
+        btnAddHost.classList.toggle("closed");
+    }
+    else {
+        // Находим родительский элемент, содержащий кнопку, на которую нажали
+        var groupdiv = event.target.parentElement.parentElement;
+
+        // Находим искомую кнопку по её классу
+        var addHostBtn = groupdiv.parentNode.querySelector('.add-host-btn');
+
+        // Добавляем или удаляем класс в зависимости от его наличия
+        if (addHostBtn) {
+            addHostBtn.classList.toggle("closed");
+        }
+    }
+
 }

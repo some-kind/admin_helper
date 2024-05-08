@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 header.addEventListener("click", toggleGroup);
             });
 
-            // Обработчик нажатия на кнопки "удалить" у каждого хоста
+            // Обработчик нажатия на кнопку "удалить" у каждого хоста
             document.querySelectorAll(".delete-btn").forEach(function(button) {
                 button.addEventListener("click", function() {
                     //console.log('Нажата кнопка Удалить');
@@ -30,6 +30,16 @@ document.addEventListener("DOMContentLoaded", function() {
                     // Отправляем запрос на удаление хоста
                     deleteHost(hostName);
                 });
+            });
+
+            // Обработчик нажатия на кнопку "Добавить хост" в блоке для показа формы
+            document.querySelectorAll(".add-host-btn").forEach(function(button) {
+                button.addEventListener("click", toggleAddHost);
+            });
+
+            // Обработчик нажатия на кнопку "Добавить" в форме для обратного скрытия формы и отправки запроса
+            document.querySelectorAll(".add-host-form-btn").forEach(function(button) {
+                button.addEventListener("click", toggleAddHost);
             });
         })
         .catch(function(error) {

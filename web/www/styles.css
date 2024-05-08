@@ -150,10 +150,17 @@ body {
   color: #fff;
   border: none;
   border-radius: 0px 0px 10px 0px;
+  min-height: 110px;
+
+  animation: fadeInOut 0.5s ease-in-out;
 }
 
 .add-host-btn:hover {
   background-color: #1a725e;
+}
+
+.add-host-btn.closed {
+  display: none;
 }
 
 .group.open .hostsManager {
@@ -166,4 +173,32 @@ body {
   flex-wrap: wrap;
   /* animation: slideIn 0.5s ease-in-out forwards; */
   /* animation: fadeInOut 0.5s ease-in-out; */
+}
+
+.add-host-form {
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: stretch;
+  height: 100px;
+  margin: 5px 50px;
+
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.add-host-form.open {
+  display: flex;
+}
+
+.host_name {
+
+}
+
+.host_ip {
+
+}
+
+.add-host-form-btn {
+
 }
