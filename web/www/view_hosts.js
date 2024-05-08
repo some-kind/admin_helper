@@ -35,21 +35,19 @@ function renderHostGroups(hostsData) {
         // Добавление блока для формы ввода нового хоста
         var addHostForm = document.createElement("div");
         addHostForm.className = "add-host-form";
-        addHostForm.innerHTML = "<input class='host_name' type=text name='host_name' placeholder='Введите имя нового хоста'><input class='host_ip' type=text name='host_ip' placeholder='Введите IP нового хоста'><button class='btn add-host-form-btn'>Добавить</button>";
+        addHostForm.innerHTML = "<input class='host_name' type=text name='host_name' placeholder='Введите имя нового хоста'><input class='host_ip' type=text name='host_ip' placeholder='Введите IP нового хоста'><button class='btn add-host-form-btn'>Добавить</button><button class='btn close-form-btn'>Отмена</button>";
         hostsManager.appendChild(addHostForm);
 
         // Добавление кнопки "Добавить хост"
         var addHostBtn = document.createElement("button");
         addHostBtn.className = "btn add-host-btn";
         addHostBtn.innerHTML = "Добавить хост";
-        //addHostBtn.id = "addHostBtn";
         hostsManager.appendChild(addHostBtn);
 
         groupDiv.appendChild(hostsManager);
         hostsContainer.appendChild(groupDiv);
     });
 }
-
 
 // Функция для обработки нажатия на заголовок группы хостов
 function toggleGroup(event) {

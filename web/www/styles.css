@@ -149,10 +149,15 @@ body {
   background-color: #428c7b;
   color: #fff;
   border: none;
-  border-radius: 0px 0px 10px 0px;
-  min-height: 110px;
+  border-radius: 10px 10px 10px 10px;
+  height: 140px;
+
+  margin: 10px 10px;
 
   animation: fadeInOut 0.5s ease-in-out;
+
+  display: block;
+  /*justify-self: end;*/
 }
 
 .add-host-btn:hover {
@@ -181,10 +186,13 @@ body {
   justify-content: space-evenly;
   flex-wrap: wrap;
   align-items: stretch;
-  height: 100px;
-  margin: 5px 50px;
+  height: 130px;
+  margin: 15px 20px;
 
   animation: fadeInOut 0.5s ease-in-out;
+  /* background-color: #e0e0e0; */
+
+  /*justify-self: end;*/
 }
 
 .add-host-form.open {
@@ -192,13 +200,22 @@ body {
 }
 
 .host_name {
-
+  border-radius: 3px;
 }
 
 .host_ip {
-
+  border-radius: 3px;
 }
 
 .add-host-form-btn {
+  background-color: #428c7b;
+  color: #fff;
+}
 
+.add-host-form-btn:hover {
+  background-color: #1a725e;
+}
+
+.close-form-btn {
+  /*justify-self: end;*/
 }

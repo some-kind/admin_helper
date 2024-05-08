@@ -62,6 +62,11 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
                 });
+
+                // Обработчик нажатия на кнопку "Отмена" в форме для её закрытия
+                document.querySelectorAll(".close-form-btn").forEach(function(button) {
+                    button.addEventListener("click", toggleAddHost);
+                });
             });
 
         })
