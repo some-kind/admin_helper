@@ -211,6 +211,93 @@ body {
   background-color: #1a725e;
 }
 
-.close-form-btn {
+.close-form-btn {}
+
+.settingSelect {
+  display: flex;
+  flex-direction: column;
+}
+
+.settingSelect select {
+  border: none; /* Убираем обводку */
+  background-color: #f2f2f2; /* Серый фон */
+  padding: 10px; /* Добавляем отступы вокруг текста */
+  font-size: 18px; /* Размер текста */
+  text-align: center; /* Выравниваем текст по центру */
+  font-weight: bold; /* Жирный текст */
+
+  /* Убираем стандартный стиль элемента select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Стили для элемента select при фокусе */
+.settingSelect select:focus {
+    /* Убираем стандартную обводку при фокусе */
+    outline: none;
+    /* Добавляем свою обводку */
+    box-shadow: 0 0 3px #999;
+
+    border: none; /* Убираем обводку */
+}
+
+.settingSelect select:hover {
+    background-color: #e0e0e0; /* Серый фон при наведении */
+    border: none; /* Убираем обводку */
+}
+
+.settingSelect select option {
+    font-size: 16px; /* Размер текста внутри option */
+    /* Задаем фон и цвет текста */
+    background-color: #f2f2f2;
+    color: #333;
+
+}
+
+/* Стили для элементов списка при наведении */
+.settingSelect select option:hover {
+    /* Изменяем цвет подсветки при наведении */
+    background-color: #e0e0e0;
+}
+
+.settingContainer{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   align-items: stretch;
+
+   margin: 20px 0px;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+}
+
+.setting.closed {
+  display: none;
+}
+
+.settingList {
+    display: flex;
+    flex-direction: column;
+}
+
+.varDiv {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+
+.varName {
+
+}
+
+.varComment {
+
+}
+
+.varValue {
 
 }

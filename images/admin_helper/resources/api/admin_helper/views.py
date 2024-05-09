@@ -129,7 +129,7 @@ def get_settings(request):
     ansible_directory = "/ansible"
     requirements_file = "requirements.yml"
 
-    result = {}
+    result = []
     # парсинг hosts.ini для получения переменных
     hosts_file = HOSTS
     # Считывание содержимого файла hosts.ini
@@ -142,7 +142,9 @@ def get_settings(request):
     hosts_lines = hosts_content.split('\n')
 
     hosts_data = {}
+    hosts_data['group'] = 'basic_settings'
     hosts_data['comment'] = 'Основные настройки'
+    hosts_data['vars'] = {}
 
     prev_line = ''  # предыдущая строка, нужна для комментариев
     for line in hosts_lines:
@@ -153,17 +155,21 @@ def get_settings(request):
             var_data = line.split('=')
             var = var_data[0]
             value = var_data[1]
-            hosts_data[var] = {}
-            hosts_data[var]['value'] = value
-            hosts_data[var]['comment'] = prev_line.strip("# ")
+            hosts_data['vars'][var] = {}
+            hosts_data['vars'][var]['value'] = value
+            hosts_data['vars'][var]['comment'] = prev_line.strip("# ")
 
         prev_line = line
 
-    # Добавляем словарь для основных настроек
-    result['basic_settings'] = hosts_data
+    # Добавляем словарь основных настроек
+    result.append(hosts_data)
+
+    # получаем список файлов в директории ansible и сортируем
+    ansible_files = os.listdir(ansible_directory)
+    ansible_files.sort()
 
     # парсинг yml плейбуков
-    for filename in os.listdir(ansible_directory):
+    for filename in ansible_files:
         if filename.endswith(".yml") and filename != requirements_file:
             filepath = os.path.join(ansible_directory, filename)
 
@@ -174,6 +180,8 @@ def get_settings(request):
                 # Парсинг комментария файла
                 file_comment = lines[0].strip("# \n")
                 filedata['comment'] = file_comment
+                filedata['group'] = filename
+                filedata['vars'] = {}
 
                 # Паттерн для поиска переменных и их комментариев
                 pattern_var = re.compile(r'^\s*(\w+):\s*(.*)$')
@@ -214,13 +222,13 @@ def get_settings(request):
                                 var_value = var_value.strip()
 
                             if current_comment:
-                                filedata[var_name] = {'comment': current_comment, 'value': var_value}
+                                filedata['vars'][var_name] = {'comment': current_comment, 'value': var_value}
                                 current_comment = None
                             else:
-                                filedata[var_name] = {'comment': "", 'value': var_value}
+                                filedata['vars'][var_name] = {'comment': "", 'value': var_value}
                         elif match_comment:
                             current_comment = match_comment.group(1)
 
-            result[filename] = filedata
+            result.append(filedata)
 
-    return JsonResponse(result)
+    return JsonResponse({'settings': result})

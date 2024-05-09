@@ -76,4 +76,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+    // запрос к серверу django для получения данных о настройках
+    // Получаем данные настроек с сервера
+    fetch('/api/get_settings/')
+        .then(function(response) {
+           return response.json();
+        })
+        .then(function(data) {
+
+            // Создаем выпадающий список для выбора настроек
+            var selectSettings = document.createElement('select');
+
+            // Создаем и добавляем варианты выбора настроек
+            for (var setting in data.settings) {
+              var option = document.createElement('option');
+              option.value = data.settings[setting]['group'];
+              option.textContent = data.settings[setting]['comment'];
+              selectSettings.appendChild(option);
+            }
+
+            // Добавляем выпадающий список на страницу настроек
+            document.getElementById('settingsSelect').appendChild(selectSettings);
+
+            // Создаем блоки переменных
+            renderSettingsGroups(data.settings);
+
+            //console.log('Сгенерирована разметка настроек');
+            // По умолчанию обновляем значения переменных для первой настройки
+            showSettings(selectSettings.value);
+
+            // Добавляем обработчик события изменения выбранной настройки
+            selectSettings.addEventListener('change', function() {
+                //console.log('Изменено значение в выпадающем списке на: ', this.value);
+                showSettings(this.value);
+            });
+        })
+        .catch(function(error) {
+            console.error("Error fetching data:", error);
+        });
+
 });
