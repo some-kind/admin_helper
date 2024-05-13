@@ -230,6 +230,8 @@ body {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+
+  border-radius: 10px;
 }
 
 /* Стили для элемента select при фокусе */
@@ -273,6 +275,7 @@ body {
 .setting {
   display: flex;
   flex-direction: column;
+  animation: fadeInOut 0.5s ease-in-out;
 }
 
 .setting.closed {
@@ -288,6 +291,8 @@ body {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .varName {
@@ -295,9 +300,51 @@ body {
 }
 
 .varComment {
-
+    background-color: #ededed;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .varValue {
+    resize: none; /* Разрешить только вертикальное изменение размера */
+    min-height: 50px; /* Минимальная высота поля */
+    height: auto; /* Автоматическое вычисление высоты в зависимости от содержимого */
+    /*overflow: hidden;*/ /* Скрыть вертикальный скроллбар */
+    width: 35%; /* Ширина поля */
+    border-radius: 3px;
+}
 
+.varContent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 80%;
+    padding: 5px 10px;
+}
+
+.varBlock {
+    display: flex;
+
+}
+
+.varBtn {
+    display: flex;
+    padding: 0px 10px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.varBtnSave {
+    background-color: #428c7b;
+    color: #fff;
+    display: none;
+}
+
+.varBtnSave.open {
+    display: block;
+}
+
+.varBtnSave:hover {
+    background-color: #1a725e;
 }

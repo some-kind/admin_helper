@@ -110,6 +110,36 @@ document.addEventListener("DOMContentLoaded", function() {
                 //console.log('Изменено значение в выпадающем списке на: ', this.value);
                 showSettings(this.value);
             });
+
+            // Добавляем обработчик изменения переменных, чтобы отобразить кнопку "Сохранить"
+            document.querySelectorAll(".varValue").forEach(function(textarea) {
+                textarea.addEventListener("input", function(event){
+                    //console.log('Изменение поля');
+                    var varBlock = event.target.closest(".varBlock");
+                    var varBtnSave = varBlock.querySelector(".varBtnSave");
+                    varBtnSave.classList.add("open");
+
+                    // Проверка, что введённое значение равно исходному (тогда убираем кнопку)
+                    var settingBlock = event.target.closest(".setting");
+                    var dataSetting = settingBlock.dataset.setting;
+                    var varName = varBlock.querySelector(".varName").textContent;
+
+                    //console.log("dataSetting: ", dataSetting);
+                    //console.log("varName: ", varName);
+
+                    data.settings.forEach(function(group) {
+                        if (group.group === dataSetting) {
+                            //console.log("group.group: ", group.group);
+                            //console.log("group.vars[varName]: ", group.vars[varName].value);
+                            //console.log("textarea.value: ", textarea.value);
+                            if (group.vars[varName].value === textarea.value) {
+                                varBtnSave.classList.remove("open");
+                            }
+                        }
+                    });
+                });
+            });
+
         })
         .catch(function(error) {
             console.error("Error fetching data:", error);

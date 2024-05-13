@@ -17,7 +17,7 @@ function renderSettingsGroups(data) {
             if (group.vars.hasOwnProperty(varname)) {
                 var varDiv = document.createElement("div");
                 varDiv.className = "varDiv";
-                varDiv.innerHTML = "<span class='varComment'>" + group.vars[varname]['comment'] + "</span><span class='varName'>" + varname + "</span><span class='varValue'>" + group.vars[varname]['value'] + "</span>";
+                varDiv.innerHTML = "<span class='varComment'>" + group.vars[varname]['comment'] + "</span><div class='varBlock'><div class='varContent'><span class='varName'>" + varname + "</span><textarea class='varValue' id='varValue' rows='5'>" + group.vars[varname]['value'] + "</textarea></div><div class='varBtn'><button class='btn varBtnSave'>Сохранить</button></div></div>";
                 varsList.appendChild(varDiv);
             }
         }

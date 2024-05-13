@@ -9,7 +9,7 @@
   gather_subset: all
 
   vars:
-    docker_edition: 'ce'
+    docker_edition: "ce"
     docker_packages:
       - "docker-{{ docker_edition }}"
       - "docker-{{ docker_edition }}-cli"

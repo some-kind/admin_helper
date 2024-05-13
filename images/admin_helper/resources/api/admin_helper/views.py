@@ -136,8 +136,6 @@ def get_settings(request):
     with open(hosts_file, 'r', encoding='utf-8') as file:
         hosts_content = file.read()
 
-
-
     # Преобразование содержимого файла в список строк
     hosts_lines = hosts_content.split('\n')
 
@@ -216,7 +214,10 @@ def get_settings(request):
                             if var_value == '':
                                 for next_line in lines[i+2:]:
                                     if next_line.startswith('      '):
-                                        var_value += next_line.strip() + '\n'
+                                        # предыдущий вариант
+                                        # var_value += next_line.strip() + '\n'
+                                        # новый вариант, убираем именно первые 6 пробелов
+                                        var_value += next_line.replace(' ' * 6, '', 1)
                                     else:
                                         break
                                 var_value = var_value.strip()
