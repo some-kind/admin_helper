@@ -10,11 +10,15 @@
 
   # переменные
   vars:
+    # Сервера для балансировки
     balance_hosts:
       - "server_1 10.10.10.1"
       - "server_2 10.10.10.2"
+    # Балансируемый порт (на фронтенде и на серверах)
     balance_port: 80
+    # Название фронтенда
     frontend_name: "front_web-server"
+    # Название бэкенда
     backend_name: "back_web-server"
 
   roles:

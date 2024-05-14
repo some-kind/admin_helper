@@ -10,9 +10,11 @@
 
   # переменные
   vars:
+    # Пользователи, которых необходимо добавить в БД
     postgresql_users:
       - name: postgres
         password: postgres
+    # Настройки файла pg_hba.conf для открытия подключений
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
       - { type: local, database: all, user: all, auth_method: peer }
