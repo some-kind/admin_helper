@@ -22,7 +22,6 @@
     docker_add_repo: true
     docker_users:
       - "{{ ansible_user }}"
-
     pgadmin_port: 5050
     pgadmin_login: "admin@domain.ru"
     pgadmin_password: "Adm1n_@"

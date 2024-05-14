@@ -182,7 +182,7 @@ def get_settings(request):
                 filedata['vars'] = {}
 
                 # Паттерн для поиска переменных и их комментариев
-                pattern_var = re.compile(r'^\s*(\w+):\s*(.*)$')
+                pattern_var = re.compile(r'^\s{4}(\w+):\s*(.*)$')
                 pattern_comment = re.compile(r'^\s*#\s*(.*)$')
 
                 # Флаг для определения, когда заканчивается блок vars
@@ -193,13 +193,13 @@ def get_settings(request):
 
                 # Парсинг переменных и их комментариев
                 for i, line in enumerate(lines[1:]):
-                    line = line.strip()
+                    # line = line.strip()
 
                     # отладка
-                    #logger.debug('Строки: ', lines)
-                    #logger.debug('Одна строка: ', line)
+                    # logger.debug('Строки: ', lines)
+                    # logger.debug('Одна строка: ', line)
 
-                    if line.startswith('vars:'):
+                    if line.startswith('  vars:'):
                         in_vars_block = True
                         continue
                     if in_vars_block and line == '':
@@ -210,6 +210,9 @@ def get_settings(request):
                         if match_var:
                             var_name = match_var.group(1)
                             var_value = match_var.group(2)
+
+                            var_name.strip()
+                            var_value.strip()
 
                             if var_value == '':
                                 for next_line in lines[i+2:]:
