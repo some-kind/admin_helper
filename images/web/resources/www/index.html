@@ -8,18 +8,18 @@
 </head>
 <body>
   <div class="tabs">
-    <button id="defaultOpen" class="tablinks active" onclick="openTab('hosts')">Хосты</button>
-    <button class="tablinks" onclick="openTab('settings')">Настройка</button>
+    <button id="defaultOpen" class="tablinks" onclick="openTab('hosts')">Хосты</button>
+    <button class="tablinks active" onclick="openTab('settings')">Настройка</button>
     <button class="tablinks" onclick="openTab('run')">Запуск</button>
   </div>
 
-  <div id="hosts" class="tabcontent">
+  <div id="hosts" class="tabcontent" style="display: none;">
 <!--    <h3>Группы хостов</h3>-->
     <div id="hostsContainer">
     </div>
   </div>
 
-  <div id="settings" class="tabcontent">
+  <div id="settings" class="tabcontent" style="display: block;">
 <!--    <h3>Настройка</h3>-->
     <div id="settingsSelect" class="settingSelect">
     </div>
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div id="run" class="tabcontent">
+  <div id="run" class="tabcontent" style="display: none;">
     <h3>Содержимое вкладки "Запуск"</h3>
     <p>Здесь будет запуск.</p>
   </div>

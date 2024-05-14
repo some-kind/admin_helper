@@ -11,8 +11,8 @@ services:
       - ./images/admin_helper/resources/api:/app
     networks:
       - backend
-    ports:
-      - 8000:8000
+    #ports:
+    #  - 8000:8000
 
   admin_helper_web:
     build: ./images/web

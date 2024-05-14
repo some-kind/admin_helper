@@ -140,9 +140,50 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             });
 
+
+            // Обработчик нажатия на кнопку "Сохранить" у переменной
+            document.querySelectorAll(".varBtnSave").forEach(function(button) {
+                button.addEventListener("click", function(event) {
+                    // Находим родительский элемент группы настроек
+                    var settingContainer = event.target.closest('.setting');
+
+                    if (settingContainer) {
+                        // Ищем инфу для переменной
+                        var nameSetting = settingContainer.dataset.setting;
+                        var varName = event.target.closest('.varBlock').querySelector('.varName').textContent;
+                        var varValue = event.target.closest('.varBlock').querySelector('.varValue').value;
+
+                        // отладка
+                        //console.log("Формируем запрос на изменение:", nameSetting, " ", varName, " ", varValue);
+
+                        // Формируем запрос
+                        changeVars(nameSetting, varName, varValue);
+
+                        // Перезагрузка страницы (старый вариант)
+                        //location.reload();
+
+                        // Меняем значение в полученном массиве
+                        data.settings.forEach(function(group) {
+                            if (group.group === nameSetting) {
+                                //console.log("group.group: ", group.group);
+                                //console.log("group.vars[varName]: ", group.vars[varName].value);
+                                //console.log("textarea.value: ", textarea.value);
+                                // меняем значение на новое
+                                group.vars[varName].value = varValue
+                                // Убираем видимость кнопки сохранить
+                                event.target.classList.remove("open");
+                            }
+                        });
+                    }
+                });
+
+            });
+
         })
         .catch(function(error) {
             console.error("Error fetching data:", error);
         });
+
+
 
 });

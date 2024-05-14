@@ -236,3 +236,73 @@ def get_settings(request):
             result.append(filedata)
 
     return JsonResponse({'settings': result})
+
+
+# функция при запросе меняет строку/строки для переменной в файле
+def change_var(request):
+    if request.method == 'POST':
+        filename = request.POST.get('file')
+
+        if filename == "basic_settings":
+            filename = "hosts.ini"
+
+        filename = f"/ansible/{filename}"
+        varname = request.POST.get('varname')
+        value = request.POST.get('value')
+        if varname and value:
+            try:
+                # Открываем файл на чтение и считываем его содержимое
+                with open(filename, 'r', encoding='utf-8') as file:
+                    lines = file.readlines()
+
+                # Замена в файле hosts.ini
+                if filename == "/ansible/hosts.ini":
+                    for i, line in enumerate(lines):
+                        if line.startswith(f"{varname}="):
+                            lines[i] = f"{varname}={value}\n"
+
+                # Замена в плейбуках
+                else:
+                    # Ищем нужную строку
+                    for i, line in enumerate(lines):
+                        # Содержимое для поиска
+                        search_content = f"    {varname}:"
+                        # Паттерн для проверки
+                        pattern = re.compile(re.escape(search_content) + r'(?=\s*$)')
+                        # Проверка
+                        match = pattern.search(line)
+                        # Если это многострочная переменная
+                        if match:
+                            # счётчик удаляемых строк
+                            delete_lines_count = 0
+                            # Проход по следующим строкам и их замена
+                            for k, next_line in enumerate(lines[i + 1:]):
+
+                                if next_line.startswith('      '):
+                                    # запоминаем количество удаляемых строк
+                                    delete_lines_count += 1
+                                else:
+                                    # добавляем нужные пробелы в новую строку
+                                    value = re.sub(r'\n', r'\n' + ' ' * 6, value)
+                                    # сносим ненужные строки
+                                    for index in range(delete_lines_count):
+                                        del lines[i + 1]
+                                    # Вставляем новую строку
+                                    lines.insert(i + 1, f"      {value}" + '\n')
+                                    break
+
+                        # Если однострочная
+                        elif line.startswith(f"    {varname}:"):
+                            lines[i] = f"    {varname}: {value}\n"
+
+                # Перезаписываем файл с новым содержимым
+                with open(filename, 'w', encoding='utf-8') as file:
+                    file.writelines(lines)
+
+                return JsonResponse({'status': 'success', 'message': 'Переменная успешно изменена'})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Параметры не указаны'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
