@@ -31,7 +31,7 @@
     # Системные пользователи, которым необходимы права на запуск Docker
     docker_users:
       - "{{ ansible_user }}"
-    # Использовать локальную PostgreSQL на сервере с Zabbix
+    # Развернуть локальную PostgreSQL на сервере с Zabbix
     use_local_postgresql: true
     # Адрес БД PostgreSQL, если не используется локальная
     postgres_host: IP

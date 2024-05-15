@@ -179,6 +179,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
             });
 
+            // отрисовка страницы RUN
+            //
+            // Создаем выпадающий список для выбора Плейбука для запуска
+            var selectSettings = document.createElement('select');
+
+            // Создаем и добавляем варианты выбора Плейбука для запуска
+            for (var setting in data.settings) {
+              if (data.settings[setting]['group'] != 'basic_settings') {
+                var option = document.createElement('option');
+                option.value = data.settings[setting]['group'];
+                option.textContent = data.settings[setting]['comment'];
+                selectSettings.appendChild(option);
+              }
+            }
+
+            // Добавляем выпадающий список на страницу запуска
+            document.getElementById('runSelect').appendChild(selectSettings);
+
+            // Обработчик нажатия на кнопку "Запуск" плейбука
+            document.querySelectorAll(".runBtn").forEach(function(button) {
+                button.addEventListener("click", function() {
+                    var selectedValue = document.querySelector('.runSelect select').value;
+
+                    console.log("Запуск плейбука:", selectedValue);
+                    fetchLogs(selectedValue);
+
+                });
+            });
+
         })
         .catch(function(error) {
             console.error("Error fetching data:", error);

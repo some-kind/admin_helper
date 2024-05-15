@@ -28,8 +28,16 @@
   </div>
 
   <div id="run" class="tabcontent" style="display: none;">
-    <h3>Содержимое вкладки "Запуск"</h3>
-    <p>Здесь будет запуск.</p>
+<!--    <h3>Содержимое вкладки "Запуск"</h3>-->
+    <div class="runBlock">
+        <div id="runSelect" class="runSelect">
+        </div>
+        <button class="btn runBtn">Запуск</button>
+    </div>
+
+    <div id="runContainer" class="settingContainer">
+        <textarea id="logTextArea" class="logTextArea" rows="40" cols="50"></textarea>
+    </div>
   </div>
   <script src="opentab.js"></script>
   <script src="events.js"></script>
@@ -38,7 +46,7 @@
   <script src="hosts_operations.js"></script>
   <script src="view_settings.js"></script>
   <script src="settings_operations.js"></script>
-<!--  <script src="script.js"></script>-->
+  <script src="view_running.js"></script>
 
 </body>
 </html>

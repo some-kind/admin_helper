@@ -68,6 +68,8 @@ body {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
+
+  animation: fadeInOut 0.5s ease-in-out;
 }
 
 .groupHeader {
@@ -306,7 +308,7 @@ body {
 }
 
 .varValue {
-    resize: none; /* Разрешить только вертикальное изменение размера */
+    resize: none; /* Запретить изменение размера */
     min-height: 50px; /* Минимальная высота поля */
     height: auto; /* Автоматическое вычисление высоты в зависимости от содержимого */
     /*overflow: hidden;*/ /* Скрыть вертикальный скроллбар */
@@ -347,4 +349,76 @@ body {
 
 .varBtnSave:hover {
     background-color: #1a725e;
+}
+
+.runSelect {
+  display: flex;
+  flex-direction: column;
+  width: 82%;
+}
+
+.runSelect select {
+  border: none; /* Убираем обводку */
+  background-color: #f2f2f2; /* Серый фон */
+  padding: 10px; /* Добавляем отступы вокруг текста */
+  font-size: 18px; /* Размер текста */
+  text-align: center; /* Выравниваем текст по центру */
+  font-weight: bold; /* Жирный текст */
+
+  /* Убираем стандартный стиль элемента select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 10px;
+}
+
+/* Стили для элемента select при фокусе */
+.runSelect select:focus {
+    /* Убираем стандартную обводку при фокусе */
+    outline: none;
+    /* Добавляем свою обводку */
+    box-shadow: 0 0 3px #999;
+
+    border: none; /* Убираем обводку */
+}
+
+.runSelect select:hover {
+    background-color: #e0e0e0; /* Серый фон при наведении */
+    border: none; /* Убираем обводку */
+}
+
+.runSelect select option {
+    font-size: 16px; /* Размер текста внутри option */
+    /* Задаем фон и цвет текста */
+    background-color: #f2f2f2;
+    color: #333;
+
+}
+
+/* Стили для элементов списка при наведении */
+.runSelect select option:hover {
+    /* Изменяем цвет подсветки при наведении */
+    background-color: #e0e0e0;
+}
+
+.runBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.runBtn {
+    background-color: #428c7b;
+    color: #fff;
+    border-radius: 10px;
+    width: 15%;
+}
+
+.runBtn:hover {
+    background-color: #1a725e;
+}
+
+.logTextArea {
+    resize: vertical;
+    border-radius: 3px;
 }

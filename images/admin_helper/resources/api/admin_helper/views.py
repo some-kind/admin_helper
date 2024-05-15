@@ -1,10 +1,13 @@
 # Create your views here.
 from django.http import JsonResponse
+from django.http import StreamingHttpResponse
+from django.http import HttpResponseBadRequest
 from django.shortcuts import render
 
 import logging
 import re
 import os
+import subprocess
 
 logger = logging.getLogger(__name__)
 
@@ -50,8 +53,13 @@ def get_hosts(request):
                     host_ip = host_data[-1].split('=')[1]
                     group_dict['hosts_list'].update({host_name: host_ip})
 
+            # TODO добавляем последние данные в файл, если конец файла
+            # if line == lines[-1]:
+            #     hosts.append(group_dict)
+
         prev_line = line
 
+    # TODO пофиксить баг hosts.ini с концом файла
     return JsonResponse({'hosts': hosts})
 
 
@@ -306,3 +314,30 @@ def change_var(request):
             return JsonResponse({'status': 'error', 'message': 'Параметры не указаны'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Метод запроса должен быть POST'})
+
+
+# функция формирования динамического SSE ответа для логов работы плейбука
+def stream_logs(process):
+    while process.poll() is None:
+        output = process.stdout.readline().decode().strip()
+        if output:
+            yield 'data: {}\n\n'.format(output)
+    remaining_output = process.communicate()[0].decode().strip()
+    if remaining_output:
+        yield 'data: {}\n\n'.format(remaining_output)
+
+
+# функция при запросе выполняет плейбук и динамически отправляет логи в ответ
+def run_ansible_playbook(request):
+    if request.method == 'GET':
+        playbook_name = request.GET.get('playbook_name')
+        if playbook_name is None:
+            return HttpResponseBadRequest("Не указан параметр playbook_name")
+        playbook_path = f"/ansible/{playbook_name}"
+        process = subprocess.Popen(['ansible-playbook', '-i', HOSTS, playbook_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
+
+        response = StreamingHttpResponse(stream_logs(process), content_type='text/event-stream')
+        response['Cache-Control'] = 'no-cache'
+        response['Connection'] = 'keep-alive'
+
+        return response
