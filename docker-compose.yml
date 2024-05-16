@@ -11,7 +11,7 @@ services:
 
   admin_helper_web:
     container_name: AH_web
-    image: somekind/admin_helper_web:1.0.0
+    image: somekind/admin_helper_web:1.0.1
     ports:
       - 80:80
     volumes:
