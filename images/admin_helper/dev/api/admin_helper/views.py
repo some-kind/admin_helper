@@ -333,8 +333,12 @@ def run_ansible_playbook(request):
         playbook_name = request.GET.get('playbook_name')
         if playbook_name is None:
             return HttpResponseBadRequest("Не указан параметр playbook_name")
-        playbook_path = f"/ansible/{playbook_name}"
-        process = subprocess.Popen(['ansible-playbook', '-i', HOSTS, playbook_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, bufsize=1)
+        # playbook_path = f"/ansible/{playbook_name}"
+
+        # Команда
+        command = 'cd /ansible && ansible-playbook {}'.format(playbook_name)
+
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         response = StreamingHttpResponse(stream_logs(process), content_type='text/event-stream')
         response['Cache-Control'] = 'no-cache'
