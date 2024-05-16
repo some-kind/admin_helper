@@ -127,4 +127,16 @@ function createHostBlock(event, hostName, hostIp) {
     // Находим блок hostsList и добавляем в него созданный блок хоста
     var hostsList = event.target.closest('.hostsManager').querySelector('.hostsList');
     hostsList.appendChild(hostElement);
+
+    // Обработчик нажатия на кнопку "удалить" у каждого хоста
+    document.querySelectorAll(".delete-btn").forEach(function(button) {
+        button.addEventListener("click", function() {
+            //console.log('Нажата кнопка Удалить');
+            // Получаем имя хоста из соответствующего блока
+            var hostName = this.parentElement.querySelector(".hostName").textContent;
+            //console.log('Выбран хост для удаления:', hostName);
+            // Отправляем запрос на удаление хоста
+            deleteHost(hostName);
+        });
+    });
 }
