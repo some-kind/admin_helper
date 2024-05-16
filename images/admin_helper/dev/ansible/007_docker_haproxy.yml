@@ -1,0 +1,47 @@
+##### Разворачивание Haproxy в контейнере
+---
+- name: "Разворачивание Haproxy в docker контейнере"
+  #strategy: free
+  #serial: "80%"
+  hosts: docker_haproxy
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  vars:
+    # Тип устанавливаемого Docker (ce - common edition)
+    docker_edition: "ce"
+    # Пакеты, необходимые для установки
+    docker_packages:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "docker-{{ docker_edition }}-rootless-extras"
+    # В каком состоянии установить пакеты
+    docker_packages_state: present
+    # Устанавливать Docker Compose в виде плагина
+    docker_install_compose_plugin: true
+    # Устанавливать Docker Compose в виде отдельного пакета
+    docker_install_compose: false
+    # Вид устанавливаемого пакета Docker Compose
+    docker_compose_package: docker-compose-plugin
+    # В каком состоянии установить пакет Docker Compose
+    docker_compose_package_state: present
+    # Добавить официальный репозиторий Docker и устанавливать оттуда
+    docker_add_repo: true
+    # Системные пользователи, которым необходимы права на запуск Docker
+    docker_users:
+      - "{{ ansible_user }}"
+    # Сервера для балансировки
+    balance_hosts:
+      - "server_1 10.10.10.1"
+      - "server_2 10.10.10.2"
+    # Балансируемый порт (на фронтенде и на серверах)
+    balance_port: 80
+    # Название фронтенда
+    frontend_name: "front_web-server"
+    # Название бэкенда
+    backend_name: "back_web-server"
+
+  roles:
+    - geerlingguy.docker
+    - docker_haproxy

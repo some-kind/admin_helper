@@ -31,24 +31,24 @@
   ansible.builtin.template:
     src: "datasource.yaml.j2"
     dest: "{{ docker_data }}/datasource.yaml"
-    owner: "somekind"
-    group: "somekind"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: "o=rw,g=r,a=r"
 
 - name: "Создание docker-compose файла"
   ansible.builtin.template:
     src: "docker-compose.j2"
     dest: "{{ docker_data }}/docker-compose.yml"
-    owner: "somekind"
-    group: "somekind"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: "o=rw,g=r,a=r"
 
 - name: "Создание конфига prometheus"
   ansible.builtin.template:
     src: "prometheus.yml.j2"
     dest: "{{ docker_data }}/prometheus/prometheus.yml"
-    owner: "somekind"
-    group: "somekind"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: "o=rw,g=r,a=r"
 
 - name: "Сборка контейнера из docker-compose файла"

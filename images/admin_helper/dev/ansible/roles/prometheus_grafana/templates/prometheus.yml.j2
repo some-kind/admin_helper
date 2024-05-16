@@ -1,0 +1,7 @@
+
+scrape_configs:
+  # указываем адреса интересующих нас серверов и порты агентов прометеус (node exporter) ставится пакетом, как служба
+  - job_name: 'node'
+    static_configs:
+      - targets: [{% for host in groups['node_exporters'] %}  '{{ hostvars[host]['ansible_host'] }}:9100',
+      {% endfor %}]

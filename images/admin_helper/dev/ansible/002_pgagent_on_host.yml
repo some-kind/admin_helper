@@ -1,0 +1,30 @@
+##### Установка pgAgent на хосты
+
+### !!! Не работает на CentOS ###
+
+---
+- name: "Установка pgAgent на хосты"
+  #strategy: free
+  #serial: "80%"
+  hosts: pgagent_on_host
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  vars:
+#    docker_edition: 'ce'
+#    docker_packages:
+#      - "docker-{{ docker_edition }}"
+#      - "docker-{{ docker_edition }}-cli"
+#      - "docker-{{ docker_edition }}-rootless-extras"
+#    docker_packages_state: present
+#    docker_install_compose_plugin: true
+#    docker_install_compose: false
+#    docker_compose_package: docker-compose-plugin
+#    docker_compose_package_state: present
+#    docker_add_repo: true
+#    docker_users:
+#      - "{{ ansible_user }}"
+
+  roles:
+    - pgagent

@@ -1,0 +1,15 @@
+##### Разворачивание Zabbix Agent 2 для мониторинга Zabbix
+---
+- name: "Разворачивание Zabbix Agent 2 для мониторинга Zabbix"
+  #strategy: free
+  #serial: "80%"
+  hosts: zabbix_agent
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  vars:
+
+
+  roles:
+    - zabbix_agent

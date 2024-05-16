@@ -1,0 +1,11 @@
+### НЕ РАБОТАЕТ (вернее, нельзя потом создать расширения pgagent)
+
+- name: "Установка репозитория PostgreSQL"
+  ansible.builtin.yum:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    state: present
+
+- name: "Установка пакета pgАgent"
+  ansible.builtin.yum:
+    name: "pgagent_14"
+    state: present

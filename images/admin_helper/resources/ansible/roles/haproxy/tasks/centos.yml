@@ -40,8 +40,8 @@
   ansible.builtin.template:
     src: "haproxy.cfg.centos.j2"
     dest: "/etc/opt/rh/rh-haproxy18/haproxy/haproxy.cfg"
-    owner: "somekind"
-    group: "somekind"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: "o=rw,g=r,a=r"
   register: haproxy_config_result
 #  vars:

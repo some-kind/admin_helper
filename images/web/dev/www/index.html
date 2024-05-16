@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Helper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="tabs">
+    <button id="defaultOpen" class="tablinks" onclick="openTab('hosts')">Хосты</button>
+    <button class="tablinks active" onclick="openTab('settings')">Настройка</button>
+    <button class="tablinks" onclick="openTab('run')">Запуск</button>
+  </div>
+
+  <div id="hosts" class="tabcontent" style="display: none;">
+<!--    <h3>Группы хостов</h3>-->
+    <div id="hostsContainer">
+    </div>
+  </div>
+
+  <div id="settings" class="tabcontent" style="display: block;">
+<!--    <h3>Настройка</h3>-->
+    <div id="settingsSelect" class="settingSelect">
+    </div>
+    <div id="settingsContainer" class="settingContainer">
+    </div>
+  </div>
+
+  <div id="run" class="tabcontent" style="display: none;">
+<!--    <h3>Содержимое вкладки "Запуск"</h3>-->
+    <div class="runBlock">
+        <div id="runSelect" class="runSelect">
+        </div>
+        <button class="btn runBtn">Запуск</button>
+    </div>
+
+    <div id="runContainer" class="settingContainer">
+        <textarea id="logTextArea" class="logTextArea" rows="40" cols="50"></textarea>
+    </div>
+  </div>
+  <script src="opentab.js"></script>
+  <script src="events.js"></script>
+  <script src="cookies.js"></script>
+  <script src="view_hosts.js"></script>
+  <script src="hosts_operations.js"></script>
+  <script src="view_settings.js"></script>
+  <script src="settings_operations.js"></script>
+  <script src="view_running.js"></script>
+
+</body>
+</html>

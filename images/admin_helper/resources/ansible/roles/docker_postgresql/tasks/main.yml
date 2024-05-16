@@ -14,8 +14,8 @@
   ansible.builtin.template:
     src: "docker-compose.j2"
     dest: "{{docker_data}}/docker-compose.yml"
-    owner: "somekind"
-    group: "somekind"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     mode: "o=rw,g=r,a=r"
 
 - name: "Сборка контейнера из docker-compose файла"
