@@ -1,0 +1,28 @@
+- name: "Создание директории для данных docker"
+  ansible.builtin.file:
+    path: "{{ docker_data }}"
+    state: directory
+    force: no
+
+- name: "Создание docker-compose файла"
+  ansible.builtin.template:
+    src: "docker-compose.j2"
+    dest: "{{ docker_data }}/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "o=rw,g=r,a=r"
+
+- name: "Сборка контейнера из docker-compose файла"
+  ansible.builtin.command: "docker compose -f {{ docker_data }}/docker-compose.yml up -d"
+  register: compose_result
+  ignore_errors: yes
+
+- name: "Проверка успешности запуска контейнеров"
+  ansible.builtin.debug:
+    msg: "Контейнеры успешно запущены"
+  when: compose_result.rc == 0
+
+- name: "Обработка ошибки запуска контейнеров"
+  ansible.builtin.fail:
+    msg: "Не удалось запустить контейнеры"
+  when: compose_result.rc != 0

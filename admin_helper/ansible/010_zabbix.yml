@@ -1,0 +1,47 @@
+##### Разворачивание Zabbix Server в контейнерах
+---
+- name: "Разворачивание Zabbix Server в контейнерах"
+  #strategy: free
+  #serial: "80%"
+  hosts: zabbix
+  become: true
+  gather_facts: true
+  gather_subset: all
+
+  vars:
+    # Тип устанавливаемого Docker (ce - common edition)
+    docker_edition: "ce"
+    # Пакеты, необходимые для установки
+    docker_packages:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "docker-{{ docker_edition }}-rootless-extras"
+    # В каком состоянии установить пакеты
+    docker_packages_state: present
+    # Устанавливать Docker Compose в виде плагина
+    docker_install_compose_plugin: true
+    # Устанавливать Docker Compose в виде отдельного пакета
+    docker_install_compose: false
+    # Вид устанавливаемого пакета Docker Compose
+    docker_compose_package: docker-compose-plugin
+    # В каком состоянии установить пакет Docker Compose
+    docker_compose_package_state: present
+    # Добавить официальный репозиторий Docker и устанавливать оттуда
+    docker_add_repo: true
+    # Системные пользователи, которым необходимы права на запуск Docker
+    docker_users:
+      - "{{ ansible_user }}"
+    # Развернуть локальную PostgreSQL на сервере с Zabbix
+    use_local_postgresql: true
+    # Адрес БД PostgreSQL, если не используется локальная
+    postgres_host: IP
+    # Название БД PostgreSQL, если не используется локальная
+    postgres_db: db_name
+    # Пользователь БД PostgreSQL, если не используется локальная
+    postgres_user: user
+    # Пароль пользователя БД PostgreSQL, если не используется локальная
+    postgres_password: password
+
+  roles:
+    - geerlingguy.docker
+    - zabbix

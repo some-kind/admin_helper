@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+
+  postgres-db:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    shm_size: 128mb
+    environment:
+      - POSTGRES_USER={{postgres_user}}
+      - POSTGRES_PASSWORD={{postgres_password}}
+      #- POSTGRES_DB=zabbix
+      - PGDATA=/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - {{data_path}}:/var/lib/postgresql/data

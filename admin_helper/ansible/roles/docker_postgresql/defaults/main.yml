@@ -1,0 +1,4 @@
+data_path: "/data/pgdata"
+docker_data: "/docker/postgres"
+postgres_user: "postgres"
+postgres_password: "postgres"

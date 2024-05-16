@@ -1,0 +1,426 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs {
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.tablinks {
+  background-color: #ddd;
+  float: left;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  width: calc(100% / 3); /* Растягиваем кнопки на одну треть ширины контейнера */
+  box-sizing: border-box; /* Учитываем padding и border в ширине кнопок */
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.tablinks:hover {
+  background-color: #aaa;
+}
+
+.tablinks.active {
+  background-color: #878787;
+}
+
+.tabcontent {
+  display: none;
+  padding: 20px;
+
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.tabcontent h3 {
+  margin-top: 0;
+}
+
+
+.group h4 {
+  margin-top: 0;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 5px;
+  background-color: #ddd;
+  border: 1px solid #999;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.btn:hover {
+  background-color: #ccc;
+}
+
+.comment {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+/* Стили для групп хостов */
+.group {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.groupHeader {
+  cursor: pointer; /* Делаем заголовок блока интерактивным */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.group.open .groupHeader {
+  border-radius: 10px 10px 0px 0px;
+}
+
+.groupHeader:hover {
+  background-color: #d0d0d0;
+}
+
+.groupHeader h4 {
+  margin: 0; /* Убираем внешние отступы у заголовка */
+}
+
+.comment {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 10px;
+  margin-left: 10px; /* Добавляем внутренний отступ слева у комментария */
+}
+
+.hostsList {
+  display: block;
+  animation: fadeInOut 0.5s ease-in-out;
+
+  padding: 10px;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.activeGroup {
+  background-color: #f0f0f0;
+}
+
+.host {
+  margin-bottom: 5px;
+  padding: 5px; /* Добавляем внутренние отступы для хостов */
+}
+
+.host span {
+  display: inline-block; /* Делаем span блочными элементами */
+  margin-right: 10px; /* Добавляем внутренний отступ между элементами */
+}
+
+.delete-btn {
+  background-color: #ff6347;
+  color: #fff;
+  border: none;
+}
+
+.delete-btn:hover {
+  background-color: #9b250f;
+}
+
+.add-host-btn {
+  background-color: #428c7b;
+  color: #fff;
+  border: none;
+  border-radius: 10px 10px 10px 10px;
+  height: 140px;
+
+  margin: 10px 10px;
+
+  animation: fadeInOut 0.5s ease-in-out;
+
+  display: block;
+}
+
+.add-host-btn:hover {
+  background-color: #1a725e;
+}
+
+.add-host-btn.closed {
+  display: none;
+}
+
+.group.open .hostsManager {
+  display: flex;
+}
+
+.hostsManager {
+  display: none;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.add-host-form {
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: stretch;
+  height: 130px;
+  margin: 15px 20px;
+
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.add-host-form.open {
+  display: flex;
+}
+
+.host_name {
+  border-radius: 3px;
+}
+
+.host_ip {
+  border-radius: 3px;
+}
+
+.add-host-form-btn {
+  background-color: #428c7b;
+  color: #fff;
+}
+
+.add-host-form-btn:hover {
+  background-color: #1a725e;
+}
+
+.close-form-btn {}
+
+.settingSelect {
+  display: flex;
+  flex-direction: column;
+}
+
+.settingSelect select {
+  border: none; /* Убираем обводку */
+  background-color: #f2f2f2; /* Серый фон */
+  padding: 10px; /* Добавляем отступы вокруг текста */
+  font-size: 18px; /* Размер текста */
+  text-align: center; /* Выравниваем текст по центру */
+  font-weight: bold; /* Жирный текст */
+
+  /* Убираем стандартный стиль элемента select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 10px;
+}
+
+/* Стили для элемента select при фокусе */
+.settingSelect select:focus {
+    /* Убираем стандартную обводку при фокусе */
+    outline: none;
+    /* Добавляем свою обводку */
+    box-shadow: 0 0 3px #999;
+
+    border: none; /* Убираем обводку */
+}
+
+.settingSelect select:hover {
+    background-color: #e0e0e0; /* Серый фон при наведении */
+    border: none; /* Убираем обводку */
+}
+
+.settingSelect select option {
+    font-size: 16px; /* Размер текста внутри option */
+    /* Задаем фон и цвет текста */
+    background-color: #f2f2f2;
+    color: #333;
+
+}
+
+/* Стили для элементов списка при наведении */
+.settingSelect select option:hover {
+    /* Изменяем цвет подсветки при наведении */
+    background-color: #e0e0e0;
+}
+
+.settingContainer{
+   display: flex;
+   flex-direction: column;
+   flex-wrap: nowrap;
+   align-items: stretch;
+
+   margin: 20px 0px;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  animation: fadeInOut 0.5s ease-in-out;
+}
+
+.setting.closed {
+  display: none;
+}
+
+.settingList {
+    display: flex;
+    flex-direction: column;
+}
+
+.varDiv {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.varName {
+
+}
+
+.varComment {
+    background-color: #ededed;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.varValue {
+    resize: none; /* Запретить изменение размера */
+    min-height: 50px; /* Минимальная высота поля */
+    height: auto; /* Автоматическое вычисление высоты в зависимости от содержимого */
+    /*overflow: hidden;*/ /* Скрыть вертикальный скроллбар */
+    width: 50%; /* Ширина поля */
+    border-radius: 3px;
+}
+
+.varContent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 80%;
+    padding: 5px 10px;
+}
+
+.varBlock {
+    display: flex;
+
+}
+
+.varBtn {
+    display: flex;
+    padding: 0px 10px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.varBtnSave {
+    background-color: #428c7b;
+    color: #fff;
+    display: none;
+}
+
+.varBtnSave.open {
+    display: block;
+}
+
+.varBtnSave:hover {
+    background-color: #1a725e;
+}
+
+.runSelect {
+  display: flex;
+  flex-direction: column;
+  width: 82%;
+}
+
+.runSelect select {
+  border: none; /* Убираем обводку */
+  background-color: #f2f2f2; /* Серый фон */
+  padding: 10px; /* Добавляем отступы вокруг текста */
+  font-size: 18px; /* Размер текста */
+  text-align: center; /* Выравниваем текст по центру */
+  font-weight: bold; /* Жирный текст */
+
+  /* Убираем стандартный стиль элемента select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 10px;
+}
+
+/* Стили для элемента select при фокусе */
+.runSelect select:focus {
+    /* Убираем стандартную обводку при фокусе */
+    outline: none;
+    /* Добавляем свою обводку */
+    box-shadow: 0 0 3px #999;
+
+    border: none; /* Убираем обводку */
+}
+
+.runSelect select:hover {
+    background-color: #e0e0e0; /* Серый фон при наведении */
+    border: none; /* Убираем обводку */
+}
+
+.runSelect select option {
+    font-size: 16px; /* Размер текста внутри option */
+    /* Задаем фон и цвет текста */
+    background-color: #f2f2f2;
+    color: #333;
+
+}
+
+/* Стили для элементов списка при наведении */
+.runSelect select option:hover {
+    /* Изменяем цвет подсветки при наведении */
+    background-color: #e0e0e0;
+}
+
+.runBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.runBtn {
+    background-color: #428c7b;
+    color: #fff;
+    border-radius: 10px;
+    width: 15%;
+}
+
+.runBtn:hover {
+    background-color: #1a725e;
+}
+
+.logTextArea {
+    resize: vertical;
+    border-radius: 3px;
+}

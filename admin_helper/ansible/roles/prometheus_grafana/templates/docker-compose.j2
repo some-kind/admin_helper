@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  # сам prometheus - сборщик метрик
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      # подкидываем ему конфиг
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  # отрисовщик метрик в браузере
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    environment:
+      # подключение без логина и пароля
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    volumes:
+      - ./dashboards:/var/lib/grafana/dashboards
+      - ./dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+
+      - {{ grafana_data }}:/var/lib/grafana

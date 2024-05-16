@@ -1,0 +1,9 @@
+- name: "Установка на Debian"
+  include_tasks: "debian.yml"
+  when: ansible_os_family == "Debian"
+
+# TODO доделать haproxy на CentOS (сейчас не работает)
+
+#- name: "Установка на CentOS"
+#  include_tasks: "centos.yml"
+#  when: ansible_os_family == "RedHat"
