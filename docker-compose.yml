@@ -2,7 +2,7 @@ version: '3.8'
 services:
   admin_helper:
     container_name: AH_api
-    image: somekind/admin_helper_api:1.0.1
+    image: somekind/admin_helper_api:1.0.2
     volumes:
       - ./admin_helper/ansible:/ansible
       - ./admin_helper/api:/app
@@ -11,7 +11,7 @@ services:
 
   admin_helper_web:
     container_name: AH_web
-    image: somekind/admin_helper_web:1.0.1
+    image: somekind/admin_helper_web:1.0.2
     ports:
       - 80:80
     volumes:
