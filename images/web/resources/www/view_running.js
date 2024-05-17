@@ -1,8 +1,24 @@
+// Инициализация AnsiUp
+var ansi_up = new AnsiUp();
 
 // Функция для обновления текста в элементе textarea
 function updateLogText(logText) {
     var logTextArea = document.getElementById('logTextArea');
-    logTextArea.value += logText + '\n';
+    // logTextArea.value += logText + '\n';
+    // Прокрутка вниз при добавлении новых логов
+    // logTextArea.scrollTop = logTextArea.scrollHeight;
+
+    // Вывод логов в консоль для проверки
+    //console.log("Original log text:", logText);
+
+    var htmlText = ansi_up.ansi_to_html(logText);  // Преобразование ANSI в HTML
+
+    // Вывод преобразованных логов в консоль для проверки
+    // console.log("HTML log text:", htmlText);
+
+    // Добавление новых строк с логами
+    logTextArea.innerHTML += htmlText + '<br>';
+
     // Прокрутка вниз при добавлении новых логов
     logTextArea.scrollTop = logTextArea.scrollHeight;
 }

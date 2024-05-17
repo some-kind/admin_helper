@@ -4,7 +4,7 @@ services:
   admin_helper:
     container_name: admin_helper
     build: ./images/admin_helper
-    image: somekind/admin_helper_api:1.0.1
+    image: somekind/admin_helper_api:1.0.2
     volumes:
       - ./images/admin_helper/dev/ansible:/ansible
       - ./images/admin_helper/dev/api:/app
@@ -15,7 +15,7 @@ services:
 
   admin_helper_web:
     build: ./images/web
-    image: somekind/admin_helper_web:1.0.1
+    image: somekind/admin_helper_web:1.0.2
     container_name: web
     ports:
       - 80:80

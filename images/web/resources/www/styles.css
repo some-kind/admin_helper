@@ -1,32 +1,96 @@
+:root {
+    /* Цветовые переменные для светлой темы */
+    --bg-main: white;
+    --bg-shape: #f0f0f0;
+    --bg-shape-hover: #d0d0d0;
+    --text-color: black;
+    --bg-btn-red: #ff6347;
+    --bg-btn-red-hover: #9b250f;
+    --bg-btn-action: #428c7b;
+    --bg-btn-action-hover: #1a725e;
+    --btn-text-color: white;
+}
+
+body.dark-mode {
+    /* Цветовые переменные для тёмной темы */
+    --bg-main: #252527;
+    --bg-shape: #141414;
+    --bg-shape-hover: #3d3c3f;
+    --text-color: #c5c5c5;
+    --bg-btn-red: #a53622;
+    --bg-btn-red-hover: #eb4628;
+    --bg-btn-action: #1e4b40;
+    --bg-btn-action-hover: #196b58;
+    --btn-text-color: #e3e3e3;
+}
+
+/* Стилизация для веб-кита */
+::-webkit-scrollbar {
+    width: 14px; /* Ширина полосы прокрутки */
+    padding: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-shape); /* Цвет фона трека (дорожки) полосы прокрутки */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-shape-hover); /* Цвет ползунка */
+    border-radius: 5px; /* Закругленные углы ползунка */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-shape-hover); /* Цвет ползунка при наведении */
+}
+
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: var(--bg-main);
 }
 
 .tabs {
   overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: var(--bg-main);
+  margin: 0px 15px;
+  height: 45px;
+}
+
+.content {
+  min-height: calc(100vh - 115px);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  height: 70px;
 }
 
 .tablinks {
-  background-color: #ddd;
+  background-color: var(--bg-main);
   float: left;
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
   outline: none;
   cursor: pointer;
-  width: calc(100% / 3); /* Растягиваем кнопки на одну треть ширины контейнера */
+  width: calc(100% / 3 - 10px); /* Растягиваем кнопки на одну треть ширины контейнера */
   box-sizing: border-box; /* Учитываем padding и border в ширине кнопок */
   padding: 10px 20px;
   transition: background-color 0.3s;
+  border-radius: 10px;
+  margin: 5px;
+  color: var(--text-color);
 }
 
 .tablinks:hover {
-  background-color: #aaa;
+  background-color: var(--bg-shape-hover);
 }
 
 .tablinks.active {
-  background-color: #878787;
+  background-color: var(--bg-shape);
 }
 
 .tabcontent {
@@ -43,32 +107,35 @@ body {
 
 .group h4 {
   margin-top: 0;
+  color: var(--text-color);
 }
 
 .btn {
   cursor: pointer;
   padding: 5px 10px;
   margin-left: 5px;
-  background-color: #ddd;
+  background-color: var(--bg-shape);
   border: 1px solid #999;
   border-radius: 3px;
   user-select: none;
 }
 
 .btn:hover {
-  background-color: #ccc;
+  background-color: var(--bg-shape-hover);
 }
 
 .comment {
   margin-top: 10px;
   margin-bottom: 5px;
   font-style: italic;
+  color: var(--text-color);
+  margin-left: 10px; /* Добавляем внутренний отступ слева у комментария */
 }
 
 /* Стили для групп хостов */
 .group {
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  /*border: 1px solid #ccc;*/
   border-radius: 10px;
 
   animation: fadeInOut 0.5s ease-in-out;
@@ -80,7 +147,7 @@ body {
   justify-content: space-between;
   align-items: center;
   /* margin-bottom: 10px; */
-  background-color: #f0f0f0;
+  background-color: var(--bg-shape);
   padding: 10px;
   border-radius: 10px;
 }
@@ -90,18 +157,11 @@ body {
 }
 
 .groupHeader:hover {
-  background-color: #d0d0d0;
+  background-color: var(--bg-shape-hover);
 }
 
 .groupHeader h4 {
   margin: 0; /* Убираем внешние отступы у заголовка */
-}
-
-.comment {
-  color: #666;
-  font-style: italic;
-  margin-bottom: 10px;
-  margin-left: 10px; /* Добавляем внутренний отступ слева у комментария */
 }
 
 .hostsList {
@@ -126,7 +186,7 @@ body {
 }
 
 .activeGroup {
-  background-color: #f0f0f0;
+  /*background-color: blue;*/
 }
 
 .host {
@@ -137,21 +197,22 @@ body {
 .host span {
   display: inline-block; /* Делаем span блочными элементами */
   margin-right: 10px; /* Добавляем внутренний отступ между элементами */
+  color: var(--text-color);
 }
 
 .delete-btn {
-  background-color: #ff6347;
-  color: #fff;
+  background-color: var(--bg-btn-red);
+  color: var(--btn-text-color);
   border: none;
 }
 
 .delete-btn:hover {
-  background-color: #9b250f;
+  background-color: var(--bg-btn-red-hover);
 }
 
 .add-host-btn {
-  background-color: #428c7b;
-  color: #fff;
+  background-color: var(--bg-btn-action);
+  color: var(--btn-text-color);
   border: none;
   border-radius: 10px 10px 10px 10px;
   height: 140px;
@@ -164,7 +225,7 @@ body {
 }
 
 .add-host-btn:hover {
-  background-color: #1a725e;
+  background-color: var(--bg-btn-action-hover);
 }
 
 .add-host-btn.closed {
@@ -207,12 +268,12 @@ body {
 }
 
 .add-host-form-btn {
-  background-color: #428c7b;
-  color: #fff;
+  background-color: var(--bg-btn-action);
+  color: var(--btn-text-color);
 }
 
 .add-host-form-btn:hover {
-  background-color: #1a725e;
+  background-color: var(--bg-btn-action-hover);
 }
 
 .close-form-btn {}
@@ -224,7 +285,7 @@ body {
 
 .settingSelect select {
   border: none; /* Убираем обводку */
-  background-color: #f2f2f2; /* Серый фон */
+  background-color: var(--bg-shape); /* Серый фон */
   padding: 10px; /* Добавляем отступы вокруг текста */
   font-size: 18px; /* Размер текста */
   text-align: center; /* Выравниваем текст по центру */
@@ -236,6 +297,7 @@ body {
   appearance: none;
 
   border-radius: 10px;
+  color: var(--text-color);
 }
 
 /* Стили для элемента select при фокусе */
@@ -249,22 +311,22 @@ body {
 }
 
 .settingSelect select:hover {
-    background-color: #e0e0e0; /* Серый фон при наведении */
+    background-color: var(--bg-shape-hover); /* Серый фон при наведении */
     border: none; /* Убираем обводку */
 }
 
 .settingSelect select option {
     font-size: 16px; /* Размер текста внутри option */
     /* Задаем фон и цвет текста */
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: var(--bg-shape);
+    color: var(--text-color);
 
 }
 
 /* Стили для элементов списка при наведении */
 .settingSelect select option:hover {
     /* Изменяем цвет подсветки при наведении */
-    background-color: #e0e0e0;
+    background-color: var(--bg-shape-hover);
 }
 
 .settingContainer{
@@ -300,11 +362,12 @@ body {
 }
 
 .varName {
-
+    color: var(--text-color);
 }
 
 .varComment {
-    background-color: #ededed;
+    background-color: var(--bg-shape);
+    color: var(--text-color);
     padding: 5px;
     border-radius: 5px;
 }
@@ -316,7 +379,31 @@ body {
     /*overflow: hidden;*/ /* Скрыть вертикальный скроллбар */
     width: 50%; /* Ширина поля */
     border-radius: 3px;
+    color: var(--text-color);
+    background-color: var(--bg-main);
 }
+
+/* Стилизация для веб-кита */
+.varValue::-webkit-scrollbar {
+    width: 6px; /* Ширина полосы прокрутки */
+    border-radius: 3px;
+}
+
+.varValue::-webkit-scrollbar-track {
+    background: var(--bg-main); /* Цвет фона трека (дорожки) полосы прокрутки */
+}
+
+.varValue::-webkit-scrollbar-thumb {
+    background: var(--bg-shape-hover); /* Цвет ползунка */
+    border-radius: 5px; /* Закругленные углы ползунка */
+}
+
+.varValue::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-shape-hover); /* Цвет ползунка при наведении */
+}
+
+
+
 
 .varContent {
     display: flex;
@@ -340,8 +427,8 @@ body {
 }
 
 .varBtnSave {
-    background-color: #428c7b;
-    color: #fff;
+    background-color: var(--bg-btn-action);
+    color: var(--btn-text-color);
     display: none;
 }
 
@@ -350,7 +437,7 @@ body {
 }
 
 .varBtnSave:hover {
-    background-color: #1a725e;
+    background-color: var(--bg-btn-action-hover);
 }
 
 .runSelect {
@@ -361,7 +448,7 @@ body {
 
 .runSelect select {
   border: none; /* Убираем обводку */
-  background-color: #f2f2f2; /* Серый фон */
+  background-color: var(--bg-shape); /* Серый фон */
   padding: 10px; /* Добавляем отступы вокруг текста */
   font-size: 18px; /* Размер текста */
   text-align: center; /* Выравниваем текст по центру */
@@ -373,6 +460,7 @@ body {
   appearance: none;
 
   border-radius: 10px;
+  color: var(--text-color);
 }
 
 /* Стили для элемента select при фокусе */
@@ -386,22 +474,22 @@ body {
 }
 
 .runSelect select:hover {
-    background-color: #e0e0e0; /* Серый фон при наведении */
+    background-color: var(--bg-shape-hover); /* Серый фон при наведении */
     border: none; /* Убираем обводку */
 }
 
 .runSelect select option {
     font-size: 16px; /* Размер текста внутри option */
     /* Задаем фон и цвет текста */
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: var(--bg-shape);
+    color: var(--text-color);
 
 }
 
 /* Стили для элементов списка при наведении */
 .runSelect select option:hover {
     /* Изменяем цвет подсветки при наведении */
-    background-color: #e0e0e0;
+    background-color: var(--bg-shape-hover);
 }
 
 .runBlock {
@@ -410,17 +498,75 @@ body {
 }
 
 .runBtn {
-    background-color: #428c7b;
-    color: #fff;
+    background-color: var(--bg-btn-action);
+    color: var(--btn-text-color);
     border-radius: 10px;
     width: 15%;
+    border: 0px;
 }
 
 .runBtn:hover {
-    background-color: #1a725e;
+    background-color: var(--bg-btn-action-hover);
+}
+
+.runContainer{
+   display: flex;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   align-items: stretch;
+   height: 90%;
+   margin: 20px 0px;
 }
 
 .logTextArea {
-    resize: vertical;
-    border-radius: 3px;
+    /*resize: vertical;*/
+    border-radius: 5px;
+
+    width: 100%;
+    height: calc(100vh - 255px);
+    /*max-height: 100%;*/
+    overflow: auto;
+    white-space: pre-wrap;
+    background-color: var(--bg-shape);
+    color: var(--text-color);
+    padding: 10px;
+    font-family: monospace;
+}
+
+/* Стилизация для веб-кита */
+.logTextArea::-webkit-scrollbar {
+    width: 10px; /* Ширина полосы прокрутки */
+    border-radius: 5px;
+}
+
+.logTextArea::-webkit-scrollbar-track {
+    background: var(--bg-shape); /* Цвет фона трека (дорожки) полосы прокрутки */
+}
+
+.logTextArea::-webkit-scrollbar-thumb {
+    background: var(--bg-shape-hover); /* Цвет ползунка */
+    border-radius: 5px; /* Закругленные углы ползунка */
+}
+
+.logTextArea::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-shape-hover); /* Цвет ползунка при наведении */
+}
+
+.switch-theme-btn {
+    width: 50px;
+    height: 50px;
+    margin: 0px 20px 20px 0px;
+    border-radius: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    background-color: var(--bg-shape);
+    /*border: none;*/
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.switch-theme-btn i {
 }
