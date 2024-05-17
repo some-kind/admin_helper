@@ -37,11 +37,9 @@ Admin Helper запускается в Docker контейнерах, что д�
 
 Для запуска Admin Helper необходимы установленные Docker и Docker Compose.
 
-1. Скачать релизный docker-compose.yml файл: 
-`curl -o docker-compose.yml https://raw.githubusercontent.com/some-kind/admin_helper/master/release%20compose%20file/docker-compose.yml` 
-или `wget -O docker-compose.yml https://raw.githubusercontent.com/some-kind/admin_helper/master/release%20compose%20file/docker-compose.yml`
-или скачать из данного репозитория напрямую (папка release compose file)
-также данный файл поставляется с релизом новой версии (смотрите блок Releases)
+1. Скачать релизный docker-compose.yml файл: `curl -o docker-compose.yml https://raw.githubusercontent.com/some-kind/admin_helper/master/release%20compose%20file/docker-compose.yml`. 
+Или `wget -O docker-compose.yml https://raw.githubusercontent.com/some-kind/admin_helper/master/release%20compose%20file/docker-compose.yml`.
+Или скачать из данного репозитория напрямую (папка release compose file). Также данный файл поставляется с релизом новой версии (смотрите блок Releases)
 2. Запустить приложение: `docker compose up -d` или `docker-compose up -d`
 3. В браузере перейти по адресу вашего сервера, например: `http://localhost/`
 
