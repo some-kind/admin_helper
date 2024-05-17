@@ -119,6 +119,7 @@ body {
   border-radius: 3px;
   user-select: none;
   color: var(--text-color);
+
 }
 
 .btn:hover {
