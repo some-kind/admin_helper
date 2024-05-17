@@ -1,6 +1,0 @@
-balance_hosts:
-  - "server_1 10.10.10.1"
-  - "server_2 10.10.10.2"
-balance_port: 80
-frontend_name: "front_web-server"
-backend_name: "back_web-server"

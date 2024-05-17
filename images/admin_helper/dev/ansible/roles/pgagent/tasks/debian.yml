@@ -1,6 +1,0 @@
-- name: "Установка pgAgent на хост"
-  ansible.builtin.apt:
-    name: pgagent
-    update_cache: yes
-    state: latest
-

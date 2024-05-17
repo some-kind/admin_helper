@@ -1,2 +1,0 @@
-docker_data: "/docker/grafana"
-grafana_data: "/data/grafana"

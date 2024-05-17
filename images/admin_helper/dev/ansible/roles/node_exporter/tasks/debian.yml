@@ -1,5 +1,0 @@
-- name: "Установка Node Exporter"
-  ansible.builtin.apt:
-    name: prometheus-node-exporter
-    update_cache: yes
-    state: latest

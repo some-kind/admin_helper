@@ -1,8 +1,0 @@
-docker_data: "/docker/zabbix"
-# если true, то на сервере будет развёрнута БД с данными Zabbix
-use_local_postgresql: true
-# если false, то указываются доп параметры подключения к БД PostgreSQL
-postgres_host: IP
-postgres_db: db_name
-postgres_user: user
-postgres_password: password

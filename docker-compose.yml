@@ -6,8 +6,8 @@ services:
     build: ./images/admin_helper
     image: somekind/admin_helper_api:1.0.2
     volumes:
-      - ./images/admin_helper/dev/ansible:/ansible
-      - ./images/admin_helper/dev/api:/app
+      - ./images/admin_helper/resources/ansible:/ansible
+      - ./images/admin_helper/resources/api:/app
     networks:
       - backend
     ports:
@@ -20,8 +20,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./images/web/dev/conf.d:/etc/nginx/conf.d
-      - ./images/web/dev/www:/var/www/html
+      - ./images/web/resources/conf.d:/etc/nginx/conf.d
+      - ./images/web/resources/www:/var/www/html
     depends_on:
       - admin_helper
     networks:
